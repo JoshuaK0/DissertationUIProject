@@ -28,7 +28,6 @@ public class DoJumpBehaviour : FSMAbility
 			{
 				fsm.ChangeState(endJumpLowSpeedState);
 			}
-			Debug.Log(flatVel.magnitude);
             exitingJump = false;
             return;
 		}

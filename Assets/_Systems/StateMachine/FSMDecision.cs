@@ -42,10 +42,28 @@ public abstract class FSMDecision : MonoBehaviour
 	}
 
     public virtual bool DecisionEvaluate()
-    { return false; }
+    { 
+        if(invert)
+        {
+            return true;
+        }
+        else
+        {
+			return false;
+		}
+    }
 
     public virtual bool FixedUpdateDecisionEvaluate()
-    { return false; }
+    {
+		if (invert)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
 
 	public void UpdateResult(bool result)
     {
