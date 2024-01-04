@@ -76,8 +76,6 @@ public class CombatantFSM : FiniteStateMachine
 
 	public float GetTimeSinceLastSawTarget()
 	{
-		
-		Debug.Log(Time.time - lastSawTargetTime);
 		return Time.time - lastSawTargetTime;
 	}
 }

@@ -8,6 +8,7 @@ public class CombatantVisualSensor : MonoBehaviour
 	[SerializeField] private LayerMask raycastLayerMask;
 	[SerializeField] private Transform agentEye;
 	[SerializeField] List<CombatantID> localSpottedTargets = new List<CombatantID>();
+	[SerializeField] float LOSRadius;
 
 	List<CombatantID> targetsInFOVCollider = new List<CombatantID>();
 
@@ -75,7 +76,7 @@ public class CombatantVisualSensor : MonoBehaviour
 	private bool IsVisible(CombatantID combatant)
 	{
 		Vector3 direction = combatant.transform.position - agentEye.position;
-		if (Physics.Raycast(agentEye.position, direction, out RaycastHit hit, Mathf.Infinity, raycastLayerMask))
+		if (Physics.SphereCast(agentEye.position, LOSRadius, direction, out RaycastHit hit, Mathf.Infinity, raycastLayerMask))
 		{
 			return hit.rigidbody && hit.rigidbody.transform == combatant.transform;
 		}

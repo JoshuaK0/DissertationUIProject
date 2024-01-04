@@ -11,6 +11,7 @@ using Unity.Burst.CompilerServices;
 using static UnityEngine.UI.Image;
 using UnityEngine.Rendering.Universal;
 using System.Drawing;
+using System.IO;
 
 public static class FOVPositioning
 {
@@ -42,7 +43,7 @@ public static class FOVPositioning
 		return sampledPoints;
 	}
 
-	public static List<Vector3> GetNavMeshPoints(List<Vector3> positions, float sampleRadius)
+	public static List<Vector3> GetNavMeshPoints(List<Vector3> positions, Vector3 startPos, float sampleRadius)
 	{
 		List<Vector3> points = new List<Vector3>();
 		foreach(Vector3 position in positions)
@@ -50,7 +51,12 @@ public static class FOVPositioning
 			NavMeshHit hit;
 			if (NavMesh.SamplePosition(position, out hit, sampleRadius, NavMesh.AllAreas))
 			{
-				points.Add(hit.position);
+				NavMeshPath path = new NavMeshPath();
+				NavMesh.CalculatePath(startPos, position, NavMesh.AllAreas, path);
+				if(path.status == NavMeshPathStatus.PathComplete)
+				{
+					points.Add(hit.position);
+				}
 			}
 		}
 		return points;
@@ -85,18 +91,19 @@ public static class FOVPositioning
 		{
 			NavMeshPath path = new NavMeshPath();
 			NavMesh.CalculatePath(startPos, position, NavMesh.AllAreas, path);
-			
-			float pathLength = Mathf.Infinity;
-			float length = 0.0f;
-			for (int j = 1; j < path.corners.Length; ++j)
+			if (path.status == NavMeshPathStatus.PathComplete)
 			{
-				length += Vector3.Distance(path.corners[j - 1], path.corners[j]);
-			}
-			
-			if (length < closestDist)
-			{
-				closestDist = Vector3.Distance(startPos, position);
-				closestPos = position;
+				float length = 0.0f;
+				for (int j = 1; j < path.corners.Length; ++j)
+				{
+					length += Vector3.Distance(path.corners[j - 1], path.corners[j]);
+				}
+
+				if (length < closestDist)
+				{
+					closestDist = length;
+					closestPos = position;
+				}
 			}
 		}
 		return closestPos;

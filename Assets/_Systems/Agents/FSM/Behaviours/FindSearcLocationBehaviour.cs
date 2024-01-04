@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.AI;
 using UnityEngine.UIElements;
+using UnityEngine.Rendering.Universal;
 
 public class FindSearchLocationBehaviour : FSMBehaviour
 {
@@ -31,16 +32,26 @@ public class FindSearchLocationBehaviour : FSMBehaviour
 
 	private List<Vector3> GetSampledPoints()
 	{
+		var rotToLookAtLastvel = Quaternion.LookRotation(combatantFSM.GetTarget().lastMovedDir);
+		
 		List<Vector3> sampledPoints = new List<Vector3>();
 		float angleIncrement = preferredSearchAngle / (numSamplePoints - 1);
-
 		for (int i = 0; i < numSamplePoints; i++)
 		{
 			float angle = -(preferredSearchAngle * 0.5f) + (angleIncrement * i);
 			float radian = angle * Mathf.Deg2Rad;
 
-			Vector3 samplePoint = new Vector3(Mathf.Sin(radian), 0, Mathf.Cos(radian)) * samplingRadius; 
-			samplePoint = transform.position + transform.rotation * samplePoint;
+			Vector3 samplePoint = new Vector3(Mathf.Sin(radian), 0, Mathf.Cos(radian)) * samplingRadius;
+			
+			if(loopCount == 0)
+			{
+				samplePoint = transform.position + rotToLookAtLastvel * samplePoint;
+			}
+			else
+			{
+				samplePoint = transform.position + transform.rotation * samplePoint;
+			}
+			
 
 			NavMeshHit hit;
 			if (NavMesh.SamplePosition(samplePoint, out hit, navMeshSampleRadius, NavMesh.AllAreas))
@@ -62,13 +73,21 @@ public class FindSearchLocationBehaviour : FSMBehaviour
 		}
 		if(sampledPoints.Count == 0)
 		{
+			angleIncrement = maxSearchAngle / (numSamplePoints - 1);
 			for (int i = 0; i < numSamplePoints; i++)
 			{
 				float angle = -(maxSearchAngle * 0.5f) + (angleIncrement * i);
 				float radian = angle * Mathf.Deg2Rad;
 
 				Vector3 samplePoint = new Vector3(Mathf.Sin(radian), 0, Mathf.Cos(radian)) * samplingRadius;
-				samplePoint = transform.position + transform.rotation * samplePoint;
+				if (loopCount == 0)
+				{
+					samplePoint = transform.position + rotToLookAtLastvel * samplePoint;
+				}
+				else
+				{
+					samplePoint = transform.position + transform.rotation * samplePoint;
+				}
 
 				NavMeshHit hit;
 				if (NavMesh.SamplePosition(samplePoint, out hit, navMeshSampleRadius, NavMesh.AllAreas))
@@ -106,10 +125,25 @@ public class FindSearchLocationBehaviour : FSMBehaviour
 
 	void SetNewSearchLocation()
 	{
+		combatantFSM.AgentUpdateRotation(true);
 		List<Vector3> sampledPoints = GetSampledPoints();
 		if(sampledPoints.Count > 0)
 		{
-			currentTargetPos = sampledPoints[Random.Range(0, sampledPoints.Count - 1)];
+			float bestDifference = Mathf.Infinity;
+			Vector3 bestPoint = sampledPoints[0];
+
+			foreach (Vector3 point in sampledPoints)
+			{
+				float currentDist = Vector3.Distance(point, fsm.transform.position);
+				float currentDifference = Mathf.Abs(currentDist - samplingRadius);
+				if (currentDifference < bestDifference)
+				{
+					bestDifference = currentDifference;
+					bestPoint = point;
+				}
+				currentTargetPos = bestPoint;
+			}
+			
 			combatantFSM.SetNavDestination(currentTargetPos);
 		}
 		
@@ -134,12 +168,8 @@ public class FindSearchLocationBehaviour : FSMBehaviour
 			{
 				if (loopCount < searchAmount)
 				{
-					SetNewSearchLocation();
-				}
-				else
-				{
 					clearAreaBehaviour.ExitBehaviour();
-					fsm.ChangeState(exitBehaviour);
+					SetNewSearchLocation();
 				}
 			}
 		}
@@ -149,6 +179,11 @@ public class FindSearchLocationBehaviour : FSMBehaviour
 			{
 				clearing = true;
 				clearAreaBehaviour.EnterBehaviour();
+			}
+			else
+			{
+				clearAreaBehaviour.ExitBehaviour();
+				fsm.ChangeState(exitBehaviour);
 			}
 		}
 	}

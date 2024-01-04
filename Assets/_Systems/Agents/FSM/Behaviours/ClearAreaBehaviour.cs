@@ -5,7 +5,7 @@ using static UnityEngine.GraphicsBuffer;
 
 public class ClearAreaBehaviour : FSMBehaviour
 {
-    CombatantID combatantFSM;
+	CombatantFSM combatantFSM;
     [SerializeField] float turnSpeed;
 
     [SerializeField] int turnDirection;
@@ -23,7 +23,8 @@ public class ClearAreaBehaviour : FSMBehaviour
 
     public override void EnterBehaviour()
     {
-        combatantFSM = fsm.GetComponent<CombatantID>();
+        combatantFSM = fsm.GetComponent<CombatantFSM>();
+        combatantFSM.AgentUpdateRotation(false);
         int randomInt = Random.Range(0, 1);
         if(randomInt == 1 )
         {
@@ -81,4 +82,9 @@ public class ClearAreaBehaviour : FSMBehaviour
     {
         return finishedThirdDirection;
     }
+
+    public override void ExitBehaviour()
+    {
+		combatantFSM.AgentUpdateRotation(true);
+	}
 }

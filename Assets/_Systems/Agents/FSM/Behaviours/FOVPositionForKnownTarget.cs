@@ -20,7 +20,10 @@ public class FOVPositionForKnownTarget : FSMBehaviour
 	[SerializeField] float navmeshSampleRadius = 1;
 	[SerializeField] LayerMask LOSCollisionLayers;
 	[SerializeField] float eyeHeight = 1.7f;
-	
+	[SerializeField] bool usePredictedPos;
+	[SerializeField] float predictionRangeMultiplier;
+	[SerializeField] Vector2 predictedRangeMinMax;
+
 
 	CombatantFSM combatantFSM;
 
@@ -29,9 +32,13 @@ public class FOVPositionForKnownTarget : FSMBehaviour
 	Vector3 targetPos;
 
 	Vector3 prevTargetPos;
+	Vector3 target;
+
+	bool showGizmos;
 
 	public override void EnterBehaviour()
 	{
+		showGizmos = true;
 		combatantFSM = fsm.GetComponent<CombatantFSM>();
 		prevTargetPos = combatantFSM.GetTargetLKP();
 		FindNewPosition();
@@ -67,21 +74,40 @@ public class FOVPositionForKnownTarget : FSMBehaviour
 		{
 			return;
 		}
-		Vector3 target = combatantFSM.GetTargetLKP();
+		if(usePredictedPos)
+		{
+			float dist = Vector3.Distance(combatantFSM.GetTargetLKP(), combatantFSM.transform.position);
+			float multiplier = Mathf.Clamp(predictionRangeMultiplier * dist, predictedRangeMinMax.x, predictedRangeMinMax.y);
+			target = combatantFSM.GetTargetLKP() + (combatantFSM.GetTarget().lastMovedDir.normalized * multiplier);
+		}
+		else
+		{
+			target = combatantFSM.GetTargetLKP();
+		}
+		
 
 		bool hasLOS = HasLOS(combatantFSM.transform.position + eyeHeight * Vector3.up, target, LOSCollisionLayers);
 		if (hasLOS)
 		{
+			if(usePredictedPos)
+			{
+				Debug.Log("returned1");
+			}
+			
 			return;
 		}
 
 		if (!TargetMovedEnoughToRelocate() && hasLOS)
 		{
+			if (usePredictedPos)
+			{
+				Debug.Log("returned2");
+			}
 			return;
 		}
 
 		sampledPositions = FOVPositioning.GetPositionsAroundPoint(target, minPositionDistance, maxPositionDistance, density);
-		sampledPositions = FOVPositioning.GetNavMeshPoints(sampledPositions, navmeshSampleRadius);
+		sampledPositions = FOVPositioning.GetNavMeshPoints(sampledPositions, combatantFSM.transform.position, navmeshSampleRadius);
 		finalList = FOVPositioning.PrunePositionsForLOSCheck(sampledPositions, target, LOSRadius, eyeHeight, LOSCollisionLayers);
 		
 
@@ -98,12 +124,18 @@ public class FOVPositionForKnownTarget : FSMBehaviour
 
 	public override void ExitBehaviour()
 	{
+		showGizmos = false;
 		sampledPositions = null;
 		CancelInvoke();
 	}
 
 	public void OnDrawGizmosSelected()
 	{
+		if(!showGizmos)
+		{
+			return;
+		}
+		
 		if (combatantFSM == null)
 		{
 			return;
