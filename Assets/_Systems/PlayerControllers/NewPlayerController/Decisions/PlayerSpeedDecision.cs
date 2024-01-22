@@ -19,47 +19,59 @@ public class PlayerSpeedDecision : FSMDecision
     [SerializeField] float speed;
 
     [SerializeField] bool useFlatVel = false;
-    
 
-    public override bool FixedUpdateDecisionEvaluate()
+    bool evaluation;
+
+    void FixedUpdate()
     {
-        if(!useFlatVel)
+        if(isActive)
         {
-            switch (speedState)
-            {
-                case SpeedState.LessThan:
-                    return rb.velocity.magnitude < speed;
-                case SpeedState.LessThanOrEqualTo:
-                    return rb.velocity.magnitude <= speed;
-                case SpeedState.EqualTo:
-                    return rb.velocity.magnitude == speed;
-                case SpeedState.GreaterThan:
-                    return rb.velocity.magnitude > speed;
-                case SpeedState.GreaterThanOrEqualTo:
-                    return rb.velocity.magnitude >= speed;
-                default:
-                    return false;
-            }
+			evaluation = EvaluateSpeed();
         }
-        else
-        {
-            float flatVel = new Vector3(rb.velocity.x, 0f, rb.velocity.z).magnitude;
-            switch (speedState)
-            {
-                case SpeedState.LessThan:
-                    return flatVel < speed;
-                case SpeedState.LessThanOrEqualTo:
-                    return flatVel <= speed;
-                case SpeedState.EqualTo:
-                    return flatVel == speed;
-                case SpeedState.GreaterThan:
-                    return flatVel > speed;
-                case SpeedState.GreaterThanOrEqualTo:
-                    return flatVel >= speed;
-                default:
-                    return false;
-            }
-        }
-        
     }
+    public override bool DecisionEvaluate()
+    {
+		return evaluation;
+	}
+
+    bool EvaluateSpeed()
+	{
+		if (!useFlatVel)
+		{
+			switch (speedState)
+			{
+				case SpeedState.LessThan:
+					return rb.velocity.magnitude < speed;
+				case SpeedState.LessThanOrEqualTo:
+					return rb.velocity.magnitude <= speed;
+				case SpeedState.EqualTo:
+					return rb.velocity.magnitude == speed;
+				case SpeedState.GreaterThan:
+					return rb.velocity.magnitude > speed;
+				case SpeedState.GreaterThanOrEqualTo:
+					return rb.velocity.magnitude >= speed;
+				default:
+					return false;
+			}
+		}
+		else
+		{
+			float flatVel = new Vector3(rb.velocity.x, 0f, rb.velocity.z).magnitude;
+			switch (speedState)
+			{
+				case SpeedState.LessThan:
+					return flatVel < speed;
+				case SpeedState.LessThanOrEqualTo:
+					return flatVel <= speed;
+				case SpeedState.EqualTo:
+					return flatVel == speed;
+				case SpeedState.GreaterThan:
+					return flatVel > speed;
+				case SpeedState.GreaterThanOrEqualTo:
+					return flatVel >= speed;
+				default:
+					return false;
+			}
+		}
+	}
 }

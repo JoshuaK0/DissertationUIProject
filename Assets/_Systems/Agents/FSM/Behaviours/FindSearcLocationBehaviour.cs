@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine.AI;
 using UnityEngine.UIElements;
 using UnityEngine.Rendering.Universal;
+using static UnityEngine.GraphicsBuffer;
 
 public class FindSearchLocationBehaviour : FSMBehaviour
 {
@@ -17,6 +18,10 @@ public class FindSearchLocationBehaviour : FSMBehaviour
 	CombatantFSM combatantFSM;
 	[SerializeField] FSMState exitBehaviour;
 	[SerializeField] ClearAreaBehaviour clearAreaBehaviour;
+	[SerializeField] float heightOffset;
+	[SerializeField] float LOSRadius;
+	[SerializeField] float defaultSamplingRadius;
+	[SerializeField] LayerMask LOSLayers;
 
 	int loopCount;
 
@@ -30,9 +35,19 @@ public class FindSearchLocationBehaviour : FSMBehaviour
 
 	Vector3 currentTargetPos;
 
+	Quaternion rotToLookAtLastvel;
+
 	private List<Vector3> GetSampledPoints()
 	{
-		var rotToLookAtLastvel = Quaternion.LookRotation(combatantFSM.GetTarget().lastMovedDir);
+		if (combatantFSM.GetTarget() == null)
+		{
+			rotToLookAtLastvel = Quaternion.LookRotation(transform.forward);
+		}
+		else
+		{
+			rotToLookAtLastvel = Quaternion.LookRotation(combatantFSM.GetTarget().lastMovedDir);
+		}
+		
 		
 		List<Vector3> sampledPoints = new List<Vector3>();
 		float angleIncrement = preferredSearchAngle / (numSamplePoints - 1);
@@ -56,16 +71,24 @@ public class FindSearchLocationBehaviour : FSMBehaviour
 			NavMeshHit hit;
 			if (NavMesh.SamplePosition(samplePoint, out hit, navMeshSampleRadius, NavMesh.AllAreas))
 			{
-				NavMeshPath path = new NavMeshPath();
-				if (NavMesh.CalculatePath(navMeshAgent.transform.position, hit.position, NavMesh.AllAreas, path))
+				Vector3 startPos = fsm.transform.position + (heightOffset * Vector3.up);
+				Vector3 targetPos = samplePoint + (heightOffset * Vector3.up);
+				Vector3 dir = startPos - targetPos;
+				float dist = Vector3.Distance(startPos, targetPos);
+				RaycastHit sphereCastHit;
+				if (Physics.SphereCast(startPos, LOSRadius, dir, out sphereCastHit, dist, LOSLayers))
 				{
-					float length = 0.0f;
-					for (int j = 1; j < path.corners.Length; ++j)
+					NavMeshPath path = new NavMeshPath();
+					if (NavMesh.CalculatePath(navMeshAgent.transform.position, hit.position, NavMesh.AllAreas, path))
 					{
-						length += Vector3.Distance(path.corners[j - 1], path.corners[j]);
-						if (length <= maxPathLength)
+						float length = 0.0f;
+						for (int j = 1; j < path.corners.Length; ++j)
 						{
-							sampledPoints.Add(samplePoint);
+							length += Vector3.Distance(path.corners[j - 1], path.corners[j]);
+							if (length <= maxPathLength)
+							{
+								sampledPoints.Add(samplePoint);
+							}
 						}
 					}
 				}
@@ -92,16 +115,24 @@ public class FindSearchLocationBehaviour : FSMBehaviour
 				NavMeshHit hit;
 				if (NavMesh.SamplePosition(samplePoint, out hit, navMeshSampleRadius, NavMesh.AllAreas))
 				{
-					NavMeshPath path = new NavMeshPath();
-					if (NavMesh.CalculatePath(navMeshAgent.transform.position, hit.position, NavMesh.AllAreas, path))
+					Vector3 startPos = fsm.transform.position + (heightOffset * Vector3.up);
+					Vector3 targetPos = samplePoint + (heightOffset * Vector3.up);
+					Vector3 dir = startPos - targetPos;
+					float dist = Vector3.Distance(startPos, targetPos);
+					RaycastHit sphereCastHit;
+					if (Physics.SphereCast(startPos, LOSRadius, dir, out sphereCastHit, dist, LOSLayers))
 					{
-						float length = 0.0f;
-						for (int j = 1; j < path.corners.Length; ++j)
+						NavMeshPath path = new NavMeshPath();
+						if (NavMesh.CalculatePath(navMeshAgent.transform.position, hit.position, NavMesh.AllAreas, path))
 						{
-							length += Vector3.Distance(path.corners[j - 1], path.corners[j]);
-							if (length <= maxPathLength)
+							float length = 0.0f;
+							for (int j = 1; j < path.corners.Length; ++j)
 							{
-								sampledPoints.Add(samplePoint);
+								length += Vector3.Distance(path.corners[j - 1], path.corners[j]);
+								if (length <= maxPathLength)
+								{
+									sampledPoints.Add(samplePoint);
+								}
 							}
 						}
 					}
@@ -116,7 +147,7 @@ public class FindSearchLocationBehaviour : FSMBehaviour
 	{
 		loopCount = 0;
 		combatantFSM = fsm.GetComponent<CombatantFSM>();
-		samplingRadius = combatantFSM.GetTimeSinceLastSawTarget();
+		samplingRadius = defaultSamplingRadius;
 		navMeshAgent = combatantFSM.GetNavMeshAgent();
 		clearAreaBehaviour.GetComponent<FSMBehaviour>().SetFSM(fsm);
 		clearAreaBehaviour.EnterBehaviour();

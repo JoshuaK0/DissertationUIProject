@@ -13,19 +13,19 @@ TagManager:
   - Water
   - UI
   - Player
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Combatant
+  - ViewCone
+  - Tracer
+  - Viewmodels
+  - PostProcessing
+  - ScopePostProcessing
+  - Hitbox
+  - WorldSpaceUI
+  - AuditorySensor
+  - RagdollIPickUp
+  - VisualSuspicion
+  - WorldSpaceViewmodelUI
+  - DamageFX
   - 
   - 
   - 

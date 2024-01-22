@@ -13,6 +13,7 @@ public class BaseMoveBehaviour : FSMBehaviour
     [Header("Movement Stats")]
     [SerializeField] float acceleration;
     [SerializeField] float airMultiplier;
+    [SerializeField] float slopeDownforce;
 
     PlayerMovementFSM pm;
 
@@ -30,7 +31,21 @@ public class BaseMoveBehaviour : FSMBehaviour
     public override void UpdateBehaviour()
     {
         HandleInput();
-    }
+		Vector3 flatVel = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
+
+/*		if (flatVel.magnitude > pm.GetCurrentMaxSpeed())
+		{
+			float speed = Vector3.Magnitude(rb.velocity);
+			float brakeSpeed = Mathf.Max(0, speed - pm.GetCurrentMaxSpeed());  // calculate the speed decrease
+			Vector3 normalisedVelocity = rb.velocity.normalized;
+			if (moveDirection == Vector3.zero)
+			{
+				normalisedVelocity = moveDirection.normalized;
+			}
+			Vector3 brakeVelocity = normalisedVelocity * brakeSpeed;  // make the brake Vector3 value  
+			rb.AddForce(-brakeVelocity);  // apply opposing brake force
+		}*/
+	}
 
     void FixedUpdate()
     {
@@ -40,27 +55,32 @@ public class BaseMoveBehaviour : FSMBehaviour
         }
         
         // calculate movement direction
-        moveDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
+        moveDirection = (orientation.forward * verticalInput) + (orientation.right * horizontalInput);
 
         // on slope
         if (slopeDetector.OnSlope() && !pm.IsExitingSlope())
         {
-            rb.AddForce(slopeDetector.GetSlopeMoveDirection(moveDirection) * acceleration * 20, ForceMode.Force);
+            rb.AddForce(slopeDetector.GetSlopeMoveDirection(moveDirection).normalized * acceleration * 10, ForceMode.Acceleration);
+            Debug.DrawRay(transform.position, slopeDetector.GetSlopeMoveDirection(moveDirection) * 2);
 
             if (rb.velocity.y > 0)
             {
-                rb.AddForce(Vector3.down * 80f, ForceMode.Force);
+                rb.AddForce(Vector3.down * slopeDownforce, ForceMode.Acceleration);
             }
 
         }
 
         // on ground
         else if (groundDetector.IsGrounded())
-            rb.AddForce(moveDirection.normalized * acceleration * 10, ForceMode.Force);
+        {
+			rb.AddForce(moveDirection.normalized * acceleration * 10, ForceMode.Acceleration);            //rb.AddForce(moveDirection.normalized * ((acceleration * 10) - rb.velocity.magnitude), ForceMode.Acceleration);
+		}
 
         // in air
         else if (!groundDetector.IsGrounded())
-            rb.AddForce(moveDirection.normalized * acceleration * 10 * airMultiplier, ForceMode.Force);
+        {
+			rb.AddForce(moveDirection.normalized * acceleration * 10 * airMultiplier, ForceMode.Acceleration);
+		}
     }
 
     public override void ExitBehaviour()
@@ -72,5 +92,10 @@ public class BaseMoveBehaviour : FSMBehaviour
     {
         horizontalInput = Input.GetAxisRaw("Horizontal");
         verticalInput = Input.GetAxisRaw("Vertical");
+
+        if(Input.GetButtonDown("Jump"))
+        {
+            pm.DoJump();
+        }
     }
 }

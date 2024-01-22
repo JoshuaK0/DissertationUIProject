@@ -9,10 +9,13 @@ public class FindTargetBehaviour : FSMBehaviour
 	[SerializeField] float searchInterval = 0.5f;
 	CombatantFSM combatantFSM;
 	SquadTargetManager squadTargetManager;
+	AwarenessManager awarenessManager;
 	public override void EnterBehaviour()
 	{
 		combatantFSM = fsm.GetComponent<CombatantFSM>();
-		squadTargetManager = combatantFSM.GetSquadTargetManager();
+		squadTargetManager = combatantFSM.GetCombatantServices().GetSquadTargetManager();
+		awarenessManager = combatantFSM.GetCombatantServices().GetAwarenessManager();
+		FindTargets();
 	}
 	public override void UpdateBehaviour()
 	{

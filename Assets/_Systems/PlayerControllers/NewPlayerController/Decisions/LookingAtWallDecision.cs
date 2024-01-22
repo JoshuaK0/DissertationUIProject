@@ -11,13 +11,14 @@ public class LookingAtWallDecision : FSMDecision
     public float detectionLength;
     public float sphereCastRadius;
     public LayerMask whatIsWall;
+	public float detectionRayHeightOffset;
 
-    public float maxWallLookAngle;
+	public float maxWallLookAngle;
     private float wallLookAngle;
     public override bool DecisionEvaluate()
     {
         RaycastHit hit;
-        Physics.SphereCast(orientation.position, sphereCastRadius, orientation.forward, out hit, detectionLength, whatIsWall);
+        Physics.SphereCast(orientation.position + (Vector3.up * detectionRayHeightOffset), sphereCastRadius, orientation.forward, out hit, detectionLength, whatIsWall);
         wallLookAngle = Vector3.Angle(orientation.forward, -hit.normal);
         return wallLookAngle < maxWallLookAngle;
     }

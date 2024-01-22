@@ -1,0 +1,1 @@
+public enum StanceType { Standing, Sprinting, Crouching, Prone }

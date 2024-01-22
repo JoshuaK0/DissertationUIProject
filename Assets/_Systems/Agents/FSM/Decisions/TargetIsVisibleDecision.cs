@@ -5,6 +5,11 @@ using UnityEngine;
 public class TargetIsVisibleDecision : FSMDecision
 {
 	CombatantFSM combatantFSM;
+
+	[SerializeField] bool hasWaitTime;
+	[SerializeField] float waitTime;
+
+	float currentTime;
 	public override void InitDecision()
 	{
 		combatantFSM = fsm.GetComponent<CombatantFSM>();
@@ -12,10 +17,42 @@ public class TargetIsVisibleDecision : FSMDecision
 
 	public override bool DecisionEvaluate()
 	{
-		if(combatantFSM.GetTarget() == null)
+		if(hasWaitTime)
 		{
-			return false;
+			if (invert)
+			{
+				if(!combatantFSM.GetTarget().isVisible())
+				{
+					currentTime += Time.deltaTime;
+					if(currentTime >= waitTime)
+					{
+						return false;
+					}
+				}
+				currentTime = 0;
+				return true;
+			}
+			else
+			{
+				if (combatantFSM.GetTarget().isVisible())
+				{
+					currentTime += Time.deltaTime;
+					if (currentTime >= waitTime)
+					{
+						return true;
+					}
+				}
+				currentTime = 0;
+				return false;
+			}
 		}
-		return combatantFSM.GetTarget().isVisible();
+		else
+		{
+			if (combatantFSM.GetTarget() == null)
+			{
+				return false;
+			}
+			return combatantFSM.GetTarget().isVisible();
+		}
 	}
 }

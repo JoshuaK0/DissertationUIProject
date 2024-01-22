@@ -4,4 +4,15 @@ using UnityEngine;
 
 public class CombatantID : MonoBehaviour
 {
+	[SerializeField] int teamIndex;
+	[SerializeField] CombatantServiceLocator combatantServices;
+
+	public CombatantServiceLocator GetCombatantServices()
+	{
+		return combatantServices;
+	}
+	public int GetTeamIndex()
+	{
+		return teamIndex;
+	}
 }

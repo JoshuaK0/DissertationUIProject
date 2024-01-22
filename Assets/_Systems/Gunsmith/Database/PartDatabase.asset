@@ -1,0 +1,72 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cbbc13a0c5d5c8a42a508ef107527711, type: 3}
+  m_Name: PartDatabase
+  m_EditorClassIdentifier: 
+  parts:
+  - partType: Reciever
+    parts:
+    - {fileID: 8596989814920573893, guid: 8d902aa373460064f85a272c252e1936, type: 3}
+    - {fileID: 5969669480759985873, guid: 742e6562bbc54db47a35c54af69573a6, type: 3}
+    - {fileID: 8596989814920573893, guid: 8d7e581c80278724bb5a1a047b410ba1, type: 3}
+    - {fileID: 698967560648315220, guid: cbb486b7514e3dd499be038b86d73285, type: 3}
+  - partType: Barrel
+    parts:
+    - {fileID: 8596989814920573893, guid: 63a72b7491001424c8e1c2eeaf1addf2, type: 3}
+    - {fileID: 8596989814920573893, guid: a2ba11cdd35b77946b417f5ce741aba9, type: 3}
+    - {fileID: 8761963838894510053, guid: 42f2dd834c0507a4b8389eccb486487e, type: 3}
+    - {fileID: 8596989814920573893, guid: 04df8bc136eacb74db39685c613b18fe, type: 3}
+  - partType: Stock
+    parts:
+    - {fileID: 8596989814920573893, guid: 2947a3db4ce831a438d0e1376816631a, type: 3}
+    - {fileID: 8612418001257069434, guid: ea1e179473685ce43acee6317ae582fc, type: 3}
+    - {fileID: 8612418001257069434, guid: 26eb24289921aa24cb8036548d5d0053, type: 3}
+    - {fileID: 8612418001257069434, guid: 2e1ce56126a33ea49b5ae78634475705, type: 3}
+    - {fileID: 8612418001257069434, guid: a3d91cd246cba2b4a93ac0613d32b588, type: 3}
+    - {fileID: 8612418001257069434, guid: 7fef8e9303db85d4cb12e0b9ef530436, type: 3}
+    - {fileID: 8612418001257069434, guid: c0dbd6c869e37644bb1df6e9b50cbf6b, type: 3}
+    - {fileID: 8612418001257069434, guid: b2138fdd76416fa4bbbd972c6b7c4393, type: 3}
+    - {fileID: 8612418001257069434, guid: fd95efd296efc0b419d15d5492ccf62e, type: 3}
+    - {fileID: 8612418001257069434, guid: 39938c34cf26dd349beaf04bf3403b93, type: 3}
+    - {fileID: 8612418001257069434, guid: b6d62efa0ce1de845a848c7ec8f32c1b, type: 3}
+  - partType: Magazine
+    parts:
+    - {fileID: 8596989814920573893, guid: 598a2ca7759e19c46ad13cba557d0eaf, type: 3}
+    - {fileID: 8596989814920573893, guid: c008334b288abdd448f41bcdf977506b, type: 3}
+    - {fileID: 8596989814920573893, guid: 7d0a14c039d00964ca00ce9a4f38b23e, type: 3}
+    - {fileID: 8596989814920573893, guid: 86d908c02aa19aa4eaefb79ef87c0e8d, type: 3}
+    - {fileID: 8596989814920573893, guid: 225e4daa82213a64c95bd50b758e8f1c, type: 3}
+    - {fileID: 8596989814920573893, guid: dd70ac73ce0df0944836521008aa68d0, type: 3}
+    - {fileID: 8596989814920573893, guid: 4ce295beea85427439349cb3fd888439, type: 3}
+    - {fileID: 8596989814920573893, guid: a5c31d79987598f4bb340dbf07038121, type: 3}
+    - {fileID: 8596989814920573893, guid: 978a059ea874e25459b3a67b6460de1a, type: 3}
+    - {fileID: 8596989814920573893, guid: 00f8b001bd04e6f408038e5dcd6d22e6, type: 3}
+    - {fileID: 8596989814920573893, guid: 514a408c1feb0834ca0121a8760dd751, type: 3}
+    - {fileID: 8596989814920573893, guid: b260df32973413d4ea7095e596d51d66, type: 3}
+    - {fileID: 8596989814920573893, guid: e89ecfa9b1d846e42a9ca5c233a37480, type: 3}
+    - {fileID: 2712434970410486840, guid: 03b0245b7009ea1488647bdf19670110, type: 3}
+    - {fileID: 8596989814920573893, guid: b838b301d67cd2f4c8f4b2c46c63ed72, type: 3}
+    - {fileID: 2712434970410486840, guid: d779678d548132e458439ed2e46af41e, type: 3}
+    - {fileID: 2712434970410486840, guid: faf4c37d5ecdacf45b5d3a3df0bae96e, type: 3}
+    - {fileID: 2712434970410486840, guid: dc3b0ca592cd6fd4db8bf3c14fecbe1c, type: 3}
+  - partType: Muzzle
+    parts:
+    - {fileID: 8596989814920573893, guid: c96dc01c989b14d408178819eb91d44f, type: 3}
+    - {fileID: 8596989814920573893, guid: 0ba31f6a8001cf6448d6a4b67aca745e, type: 3}
+    - {fileID: 8596989814920573893, guid: fb4bb4314b0cb7a4a8fef495344f602a, type: 3}
+    - {fileID: 8596989814920573893, guid: d4c2f5848f3be6448947085c59998013, type: 3}
+  - partType: Sight
+    parts:
+    - {fileID: 8596989814920573893, guid: 9f41c2b40df5e3748a9b29d357774f17, type: 3}
+    - {fileID: 8596989814920573893, guid: dac2486f33bce7744a6f75a31679ea15, type: 3}
+    - {fileID: 8596989814920573893, guid: 30390c0ef824c35419fd664d951e8aee, type: 3}
+    - {fileID: 8596989814920573893, guid: 6d6087a5e475571478ba840920a31fec, type: 3}

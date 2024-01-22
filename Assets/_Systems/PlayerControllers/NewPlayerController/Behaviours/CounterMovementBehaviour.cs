@@ -5,25 +5,26 @@ using static PlayerMovementAdvanced;
 
 public class CounterMovementBehaviour : FSMBehaviour
 {
-    [SerializeField] float drag;
-    [SerializeField] Rigidbody rb;
+    [SerializeField] Vector2 drag;
     [SerializeField] bool disableInAir;
     [SerializeField] GroundDetector groundDetector;
-    
-    public override void UpdateBehaviour()
+
+	PlayerMovementFSM pm;
+
+	public override void EnterBehaviour()
     {
-        if(disableInAir && !groundDetector.IsGrounded())
-        {
-            rb.drag = 0;
-        }
+		pm = fsm.GetComponent<PlayerMovementFSM>();
+	}
+
+    public override void FixedUpdateBehaviour()
+    {
+		if (disableInAir && (!groundDetector.IsGrounded() || pm.IsJumping()))
+		{
+			pm.SetDrag(Vector3.zero);
+		}
         else
         {
-            rb.drag = drag;
-        }
-    }
-
-    public override void ExitBehaviour()
-    {
-        rb.drag = 0;
+			pm.SetDrag(drag);
+		}
     }
 }

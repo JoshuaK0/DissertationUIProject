@@ -79,6 +79,29 @@ public static class FOVPositioning
 		return results;
 	}
 
+	public static List<Vector3> PrunePositionsForOverlaps(List<Vector3> positions, List<Vector3> positionsToAvoid, float minDistance)
+	{
+		List<Vector3> results = new List<Vector3>();
+		foreach (Vector3 position in positions)
+		{
+			bool valid = true;
+			foreach(Vector3 pos in positionsToAvoid)
+			{
+				float dist = Vector3.Distance(pos, position);
+				if(dist < minDistance)
+				{
+					valid = false;
+				}
+				
+			}
+			if(valid)
+			{
+				results.Add(position);
+			}
+		}
+		return results;
+	}
+
 	public static Vector3 GetClosestPos(List<Vector3> positions, Vector3 startPos)
 	{
 		if(positions.Count == 0)

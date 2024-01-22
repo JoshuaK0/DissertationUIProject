@@ -90,6 +90,7 @@ public class ProceduralFOVBox : MonoBehaviour
 
     private void OnDrawGizmosSelected()
     {
+        CreateCube(frontFace, middleFace, backFace);
         Gizmos.color = Color.red;
 
         Gizmos.DrawWireMesh(GetComponent<MeshFilter>().sharedMesh, transform.position, transform.rotation);

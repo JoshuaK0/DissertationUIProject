@@ -7,11 +7,21 @@ public class SpringRecoil : MonoBehaviour
 	[SerializeField] float stiffness;
 	[SerializeField] float damping;
 	[SerializeField] float recoilSpeed;
+	[SerializeField] float arrivalDistance;
 
 	[SerializeField] Vector3 targetValue;
 	[SerializeField] Vector3 currentValue;
 
 	[SerializeField] bool isEulerAngle;
+
+	[SerializeField] NonRecoilMotionType motionType;
+
+	enum NonRecoilMotionType
+	{
+		MoveTowards,
+		Lerp,
+		Slerp
+	}
 
 
 	SpringUtils.tDampedSpringMotionParams xSpringParams;
@@ -62,8 +72,20 @@ public class SpringRecoil : MonoBehaviour
 
 	void NonSpringMovement()
 	{
-		currentValue = Vector3.MoveTowards(currentValue, nonSpringTarget, recoilSpeed * Time.deltaTime);
-		if (Vector3.Magnitude(currentValue - nonSpringTarget) < 0.0001)
+		if(motionType == NonRecoilMotionType.MoveTowards)
+		{
+			currentValue = Vector3.MoveTowards(currentValue, nonSpringTarget, recoilSpeed * Time.deltaTime);
+		}
+		else if (motionType == NonRecoilMotionType.Lerp)
+		{
+			currentValue = Vector3.Lerp(currentValue, nonSpringTarget, recoilSpeed * Time.deltaTime);
+
+		}
+		else if (motionType == NonRecoilMotionType.Slerp)
+		{
+			currentValue = Vector3.Slerp(currentValue, nonSpringTarget, recoilSpeed * Time.deltaTime);
+		}
+		if (Vector3.Magnitude(currentValue - nonSpringTarget) <= arrivalDistance)
 		{
 			currentValue = nonSpringTarget;
 			isIncreasing = false;

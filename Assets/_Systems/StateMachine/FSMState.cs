@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditorInternal;
 using UnityEngine;
 
 public class FSMState : MonoBehaviour
@@ -27,6 +26,7 @@ public class FSMState : MonoBehaviour
         {
             foreach (FSMDecision decision in transition.GetDecisions())
             {
+                decision.SetActive(true);
                 decision.SetFSM(fsm);
                 decision.InitDecision();
             }
@@ -62,25 +62,6 @@ public class FSMState : MonoBehaviour
 
 	public void FixedUpdateState()
 	{
-		foreach (FSMTransition transition in transitions)
-		{
-			bool canTransition = true;
-			foreach (FSMDecision decision in transition.GetDecisions())
-			{
-				bool decisionResult = decision.FixedUpdateEvaluate();
-				if (!decisionResult)
-				{
-					canTransition = false;
-				}
-				decision.UpdateResult(decisionResult);
-			}
-			if (canTransition)
-			{
-				fsm.ChangeState(transition.GetTransitionState(), transition);
-				return;
-			}
-		}
-        
 		foreach (FSMBehaviour behaviour in behaviours)
 		{
 			behaviour.FixedUpdateBehaviour();
@@ -93,5 +74,12 @@ public class FSMState : MonoBehaviour
         {
             behaviour.ExitBehaviour();
         }
-    }
+		foreach (FSMTransition transition in transitions)
+		{
+			foreach (FSMDecision decision in transition.GetDecisions())
+			{
+				decision.SetActive(false);
+			}
+		}
+	}
 }

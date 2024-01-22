@@ -28,8 +28,9 @@ public class SpeedLimitBehaviour : FSMBehaviour
         pm = fsm.GetComponent<PlayerMovementFSM>();
         prevMaxSpeed = pm.GetCurrentMaxSpeed();
         currentMaxSpeed = Mathf.Max(prevMaxSpeed, maxSpeed);
-        
-    }
+		pm.SetCurrentMaxSpeed(maxSpeed);
+
+	}
 
     void UpdateMaxSpeed()
     {
@@ -51,7 +52,7 @@ public class SpeedLimitBehaviour : FSMBehaviour
     public override void UpdateBehaviour()
     {
         flatVel = new Vector3(rb.velocity.x, 0f, rb.velocity.z).magnitude;
-        pm.SetCurrentMaxSpeed(Mathf.Min(flatVel, maxSpeed));
+        
 
         if (maxSpeed != prevMaxSpeed)
         {
@@ -78,10 +79,16 @@ public class SpeedLimitBehaviour : FSMBehaviour
             // limit velocity if needed
             if (flatVel > currentMaxSpeed)
             {
-                
-                Vector3 limitedVel = new Vector3(rb.velocity.x, 0f, rb.velocity.z).normalized * currentMaxSpeed;
-                rb.velocity = new Vector3(limitedVel.x, rb.velocity.y, limitedVel.z);
-            }
+                /*                Vector3 limitedVel = new Vector3(rb.velocity.x, 0f, rb.velocity.z).normalized * currentMaxSpeed;
+                                rb.velocity = new Vector3(limitedVel.x, rb.velocity.y, limitedVel.z);*/
+
+                Vector3 flatVel = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
+                float speed = flatVel.magnitude;
+				float brakeSpeed = speed - currentMaxSpeed;  // calculate the speed decrease
+				Vector3 normalisedVelocity = rb.velocity.normalized;
+				Vector3 brakeVelocity = normalisedVelocity * brakeSpeed;  // make the brake Vector3 value  
+				rb.AddForce(-brakeVelocity, ForceMode.Acceleration);  // apply opposing brake force
+			}
         }
 /*
         if (maxYSpeed != 0 && rb.velocity.y > maxYSpeed)

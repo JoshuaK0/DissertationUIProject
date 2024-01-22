@@ -31,8 +31,9 @@ public class ClimbingBehaviour : FSMBehaviour
 
     [Header("Detection")]
     public float detectionLength;
-    public float sphereCastRadius;
     public float maxWallLookAngle;
+    [SerializeField] float detectionRayHeightOffset;
+    [SerializeField] float detectionRadius;
     private float wallLookAngle;
 
     private RaycastHit frontWallHit;
@@ -54,7 +55,7 @@ public class ClimbingBehaviour : FSMBehaviour
     public override void EnterBehaviour()
     {
         doFixedUpdate = true;
-        wallFront = Physics.Raycast(orientation.position, orientation.forward, out frontWallHit, detectionLength, whatIsWall);
+        wallFront = Physics.SphereCast(orientation.position + (Vector3.up * detectionRayHeightOffset), detectionRadius, orientation.forward, out frontWallHit, detectionLength, whatIsWall);
         wallNormal = frontWallHit.normal;
     }
 
@@ -70,17 +71,20 @@ public class ClimbingBehaviour : FSMBehaviour
             climbTimer = maxClimbTime;
         }
 
-        WallCheck();
+        
     }
 
     private void FixedUpdate()
     {
+        
         if(!doFixedUpdate)
         {
             return;
         }
-        if (climbing && !exitingWall) ClimbingMovement();
-    }
+		WallCheck();
+		if (climbing && !exitingWall) ClimbingMovement();
+		
+	}
 
     public override void UpdateBehaviour()
     {
@@ -113,7 +117,7 @@ public class ClimbingBehaviour : FSMBehaviour
             
             if (climbing)
             {
-                Debug.Log("Exiting");
+                
                 StopClimbing();
             }
 
@@ -129,7 +133,7 @@ public class ClimbingBehaviour : FSMBehaviour
         // State 3 - None
         else
         {
-            StopClimbing();
+			StopClimbing();
             pm.ChangeState(exitState);
         }
 
@@ -138,7 +142,7 @@ public class ClimbingBehaviour : FSMBehaviour
 
     private void WallCheck()
     {
-        wallFront = Physics.Raycast(orientation.position, -wallNormal, out frontWallHit, detectionLength, whatIsWall);
+        wallFront = Physics.SphereCast(orientation.position + (Vector3.up * detectionRayHeightOffset), detectionRadius,orientation.forward, out frontWallHit, detectionLength, whatIsWall);
         wallLookAngle = Vector3.Angle(orientation.forward, -frontWallHit.normal);
 
         bool newWall = frontWallHit.transform != lastWall || Mathf.Abs(Vector3.Angle(lastWallNormal, frontWallHit.normal)) > minWallNormalAngleChange;

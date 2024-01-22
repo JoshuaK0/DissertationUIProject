@@ -1,13 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class SlideBehaviour : FSMAbility
 {
     [SerializeField] Transform orientation;
     [SerializeField] float slideForce;
-    [SerializeField] float slopeSlideForce;
+	[SerializeField] float downForce;
+	[SerializeField] float slopeSlideForce;
     [SerializeField] Rigidbody rb;
     [SerializeField] float minimumVelocity;
 
@@ -31,7 +31,8 @@ public class SlideBehaviour : FSMAbility
         doFixedUpdate = true;
         if (groundDetector.IsGrounded())
         {
-            if (slopeDetector.OnSlope())
+			rb.AddForce(-orientation.up * downForce, ForceMode.VelocityChange);
+			if (slopeDetector.OnSlope())
             {
                 rb.AddForce(slopeDetector.GetSlopeMoveDirection(orientation.forward) * slideForce, ForceMode.VelocityChange);
             }

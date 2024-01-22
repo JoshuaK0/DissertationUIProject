@@ -22,7 +22,6 @@ public class WallrunBehaviour : FSMBehaviour
     public KeyCode upwardsRunKey = KeyCode.LeftShift;
     public KeyCode downwardsRunKey = KeyCode.LeftControl;
     private bool upwardsRunning;
-    private bool downwardsRunning;
     private float horizontalInput;
     private float verticalInput;
 
@@ -33,6 +32,7 @@ public class WallrunBehaviour : FSMBehaviour
     private RaycastHit rightWallhit;
     private bool wallLeft;
     private bool wallRight;
+    public float detectionRadius;
 
     [Header("Exiting")]
     private bool exitingWall;
@@ -62,8 +62,8 @@ public class WallrunBehaviour : FSMBehaviour
         doFixedUpdate = true;
         pm = fsm.GetComponent<PlayerMovementFSM>();
         
-        wallRight = Physics.Raycast(orientation.position, orientation.right, out rightWallhit, wallCheckDistance, whatIsWall);
-        wallLeft = Physics.Raycast(orientation.position, -orientation.right, out leftWallhit, wallCheckDistance, whatIsWall);
+        wallRight = Physics.SphereCast(orientation.position, detectionRadius, orientation.right, out rightWallhit, wallCheckDistance, whatIsWall);
+        wallLeft = Physics.SphereCast(orientation.position, detectionRadius , - orientation.right, out leftWallhit, wallCheckDistance, whatIsWall);
 
         if(wallRight)
         {
@@ -109,11 +109,11 @@ public class WallrunBehaviour : FSMBehaviour
     {
         if(wallRight)
         {
-            wallRight = Physics.Raycast(orientation.position, -wallNormal, out rightWallhit, wallCheckDistance, whatIsWall);
+            wallRight = Physics.SphereCast(orientation.position, detectionRadius , - wallNormal, out rightWallhit, wallCheckDistance, whatIsWall);
         }
         else if (wallLeft)
         {
-            wallLeft = Physics.Raycast(orientation.position, -wallNormal, out leftWallhit, wallCheckDistance, whatIsWall);
+            wallLeft = Physics.SphereCast(orientation.position, detectionRadius , - wallNormal, out leftWallhit, wallCheckDistance, whatIsWall);
         }
     }
 
@@ -129,7 +129,6 @@ public class WallrunBehaviour : FSMBehaviour
         verticalInput = Input.GetAxisRaw("Vertical");
 
         upwardsRunning = Input.GetKey(upwardsRunKey);
-        downwardsRunning = Input.GetKey(downwardsRunKey);
 
         // State 1 - Wallrunning
         if ((wallLeft || wallRight) && verticalInput > 0 && AboveGround() && !exitingWall)
@@ -214,7 +213,7 @@ public class WallrunBehaviour : FSMBehaviour
         // upwards/downwards force
         if (upwardsRunning)
             rb.velocity = new Vector3(rb.velocity.x, wallClimbSpeed, rb.velocity.z);
-        if (downwardsRunning)
+        else
             rb.velocity = new Vector3(rb.velocity.x, -wallClimbSpeed, rb.velocity.z);
 
         // push to wall force

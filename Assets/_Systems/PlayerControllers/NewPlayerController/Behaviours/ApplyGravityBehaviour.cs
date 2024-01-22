@@ -7,6 +7,7 @@ public class ApplyGravityBehaviour : FSMBehaviour
     [SerializeField] float gravityForce;
     [SerializeField] bool disableOnSlope;
     [SerializeField] SlopeDetector slopeDetector;
+    [SerializeField] GroundDetector groundDetector;
     [SerializeField] Rigidbody rb;
 
     bool doGravity = false;
@@ -24,7 +25,12 @@ public class ApplyGravityBehaviour : FSMBehaviour
             {
                 return;
             }
-            else
+			if (groundDetector.IsGrounded())
+            {
+				return;
+			}
+
+			else
             {
                 rb.AddForce(Vector3.up * -gravityForce, ForceMode.Acceleration);
             }

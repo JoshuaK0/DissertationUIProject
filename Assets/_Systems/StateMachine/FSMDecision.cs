@@ -6,9 +6,10 @@ using UnityEngine;
 public abstract class FSMDecision : MonoBehaviour
 {
     protected FiniteStateMachine fsm;
-    [SerializeField] bool invert;
+    [SerializeField] protected bool invert;
 
     [SerializeField] bool passed;
+	protected bool isActive;
 
     public void SetFSM(FiniteStateMachine newFSM)
     {
@@ -17,6 +18,10 @@ public abstract class FSMDecision : MonoBehaviour
     public virtual void InitDecision()
     {
     }
+    public void SetActive(bool active)
+    {
+		isActive = active;
+	}
     public bool Evaluate()
     {
         if (invert)

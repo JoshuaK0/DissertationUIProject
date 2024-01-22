@@ -10,10 +10,12 @@ public class WallInFrontDecision : FSMDecision
     [Header("Detection")]
     public float detectionLength;
     public LayerMask whatIsWall;
-    
-    public override bool DecisionEvaluate()
+	public float detectionRayHeightOffset;
+    public float detectionRadius;
+
+	public override bool DecisionEvaluate()
     {
         RaycastHit hit;
-        return Physics.Raycast(orientation.position, orientation.forward, out hit, detectionLength, whatIsWall);
+        return Physics.SphereCast(orientation.position + (Vector3.up * detectionRayHeightOffset), detectionRadius, orientation.forward, out hit, detectionLength, whatIsWall);
     }
 }

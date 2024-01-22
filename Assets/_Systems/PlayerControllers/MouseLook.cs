@@ -1,21 +1,47 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class MouseLook : MonoBehaviour
 {
-    public Transform cameraHolder;
-    public Transform cameraTransform;
-    public float mouseSensitivity;
+	public Rigidbody playerRigidbody;
+	public Transform cameraPivot;
+	public Transform cameraTransform;
+	public float mouseSensitivity;
 
-    private Vector2 rotation;
+	private float verticalRotation = 0f;
 
-    // Update is called once per frame
-    void Update()
-    {
-        rotation.y += Input.GetAxis("Mouse X") * mouseSensitivity;
-        rotation.x = Mathf.Clamp(rotation.x -= Input.GetAxis("Mouse Y") * mouseSensitivity, -90, 90);
-        cameraHolder.eulerAngles = new Vector3(0, rotation.y, 0);
-        cameraTransform.localEulerAngles = new Vector3(rotation.x, 0, 0);
-    }
+	public bool isRigidbody;
+
+	float mouseY;
+	float mouseX;
+
+	void Update()
+	{
+		// Mouse movement
+		
+		mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity;
+
+		// Rotate the camera for up/down look
+		verticalRotation -= mouseY;
+		verticalRotation = Mathf.Clamp(verticalRotation, -90f, 90f);
+		cameraTransform.localEulerAngles = new Vector3(verticalRotation, 0f, 0f);
+
+		// Prepare horizontal rotation for FixedUpdate
+		mouseX = Input.GetAxis("Mouse X") * mouseSensitivity;
+		if (!isRigidbody)
+		{
+			cameraPivot.eulerAngles = cameraPivot.eulerAngles + new Vector3(0f, mouseX, 0f);
+		}
+		
+	}
+
+	void FixedUpdate()
+	{
+		if(isRigidbody)
+		{
+			
+			Quaternion horizontalRotation = Quaternion.Euler(0f, mouseX, 0f);
+			playerRigidbody.MoveRotation(playerRigidbody.rotation * horizontalRotation);
+		}
+		
+	}
 }

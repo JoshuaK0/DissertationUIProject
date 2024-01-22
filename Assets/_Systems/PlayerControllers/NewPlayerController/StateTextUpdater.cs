@@ -9,15 +9,10 @@ public class StateTextUpdater : MonoBehaviour
     [SerializeField] TMP_Text speedTest;
     [SerializeField] FiniteStateMachine pm;
     [SerializeField] Rigidbody rb;
-    void Start()
-    {
-        
-    }
-
     // Update is called once per frame
     void FixedUpdate()
     {
-        stateText.text = pm.GetCurrentState();
-        speedTest.text = rb.velocity.magnitude.ToString("F1");
-    }
+        speedTest.text = rb.velocity.magnitude.ToString();
+		stateText.text = pm.GetCurrentState();
+	}
 }

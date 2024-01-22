@@ -10,11 +10,11 @@ public abstract class FiniteStateMachine : MonoBehaviour
 
     [SerializeField] protected FSMState currentState;
 
-    int tracebackLength;
+	int tracebackLength;
 
     [SerializeField] List<FSMTraceback> traceback = new List<FSMTraceback>();
 
-    FSMState previousState;
+	FSMState previousState;
 
     bool exiting;
 
@@ -90,7 +90,7 @@ public abstract class FiniteStateMachine : MonoBehaviour
     {
         if(currentState!=null)
         {
-            Handles.Label(transform.position, currentState.ToString().Remove(currentState.ToString().Length - 8));
+            Handles.Label(transform.position + Vector3.up * 2, currentState.ToString().Remove(currentState.ToString().Length - 8));
         }
     }
 
@@ -109,23 +109,23 @@ public abstract class FiniteStateMachine : MonoBehaviour
 
 public class FSMTraceback
 {
-    public string stateName;
-    public FSMState toState;
-    public FSMState fromState;
-    public FSMTransition transition;
+	public string stateName;
+	public FSMState toState;
+	public FSMState fromState;
+	public FSMTransition transition;
 
-    public FSMTraceback(FSMState toState, FSMState fromState, FSMTransition transition)
-    {
-        if (fromState != null)
-        {
-            this.stateName = toState.ToString().Remove(toState.ToString().Length - 8) + " from " + fromState.ToString().Remove(fromState.ToString().Length - 8);
-        }
-        else
-        {
-            this.stateName = "Set state to " + toState.ToString().Remove(toState.ToString().Length - 8);
-        }
-        this.toState = toState;
-        this.fromState = fromState;
-        this.transition = transition;
-    }
+	public FSMTraceback(FSMState toState, FSMState fromState, FSMTransition transition)
+	{
+		if (fromState != null)
+		{
+			stateName = toState.ToString().Remove(toState.ToString().Length - 8) + " from " + fromState.ToString().Remove(fromState.ToString().Length - 8);
+		}
+		else
+		{
+			stateName = "Set state to " + toState.ToString().Remove(toState.ToString().Length - 8);
+		}
+		this.toState = toState;
+		this.fromState = fromState;
+		this.transition = transition;
+	}
 }
