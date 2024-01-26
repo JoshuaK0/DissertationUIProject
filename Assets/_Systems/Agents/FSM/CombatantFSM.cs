@@ -14,7 +14,6 @@ public class CombatantFSM : FiniteStateMachine, IKillable
 	[SerializeField] SquadTarget currentTarget;
 	[SerializeField] float awarenessThreshold;
 	[SerializeField] float minAwarenessAfterDetection;
-	[SerializeField] float awarenessAfterDetection;
 
 	[Header("Guard")]
 	[SerializeField] Vector3 guardingPos;
@@ -58,7 +57,7 @@ public class CombatantFSM : FiniteStateMachine, IKillable
 		if (awarenessManager.GetCurrentAwareness() >= awarenessThreshold)
 		{
 			squadManager.SetTeamMinAwareness(minAwarenessAfterDetection);
-			squadManager.SetSquadCurentAwareness(awarenessAfterDetection);
+			squadManager.SetSquadCurentAwareness(minAwarenessAfterDetection);
 		}
 	}
 

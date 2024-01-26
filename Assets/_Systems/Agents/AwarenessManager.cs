@@ -70,11 +70,16 @@ public class AwarenessManager : MonoBehaviour
 
 	public void SetMinAwareness(float newAwareness)
 	{
+		if(newAwareness >= currentMinAwareness)
+		{
+			awarenessLoseTimer = awarenessLoseDelay;
+		}
 		currentMinAwareness = newAwareness;
 		if(currentAwareness < currentMinAwareness)
 		{
 			currentAwareness = currentMinAwareness;
 		}
+		
 	}
 
 	public float GetCurrentMinAwareness()
@@ -84,7 +89,13 @@ public class AwarenessManager : MonoBehaviour
 
 	public void SetCurrentAwareness(float newAwareness)
 	{
+		if (newAwareness >= currentAwareness)
+		{
+			awarenessLoseTimer = awarenessLoseDelay;
+		}
 		currentAwareness = newAwareness;
+		
+		
 	}
 
 	void Update()

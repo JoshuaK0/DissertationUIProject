@@ -755,7 +755,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13a04ba0e7f743e4190b69f974bc87bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  aimSpeed: 5
+  aimSpeed: 2.5
 --- !u!1 &532315998265889048
 GameObject:
   m_ObjectHideFlags: 0
@@ -1645,6 +1645,7 @@ MonoBehaviour:
   - {fileID: 7056982618232723759}
   - {fileID: 82398344514642110}
   - {fileID: 5061747904630961093}
+  - {fileID: 6351802455299082441}
   transitions: []
 --- !u!1 &1068226118772619246
 GameObject:
@@ -2144,8 +2145,7 @@ MonoBehaviour:
   combatantServices: {fileID: 5240666363389620370}
   currentTarget: {fileID: 0}
   awarenessThreshold: 100
-  minAwarenessAfterDetection: 20
-  awarenessAfterDetection: 100
+  minAwarenessAfterDetection: 25
   guardingPos: {x: 0, y: 0, z: 0}
   deathState: {fileID: 873088260084365871}
   showDebugLogs: 0
@@ -2800,7 +2800,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0f59d5477d171d48a91f32117d465e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  aimSpeed: 10
+  aimSpeed: 5
 --- !u!1 &2448862650072040316
 GameObject:
   m_ObjectHideFlags: 0
@@ -2891,7 +2891,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0f59d5477d171d48a91f32117d465e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  aimSpeed: 10
+  aimSpeed: 5
 --- !u!1 &2487853950394005671
 GameObject:
   m_ObjectHideFlags: 0
@@ -3016,7 +3016,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1506133392556147668
 Transform:
   m_ObjectHideFlags: 0
@@ -3025,13 +3025,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2911167602865792064}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.047281835, y: 0.000000014901161, z: 0.000000013969839, w: 0.99888164}
-  m_LocalPosition: {x: -0.214, y: 0.67, z: 0.5}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.21, y: 1.163, z: 0.3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 463008697640053173}
-  m_LocalEulerAnglesHint: {x: -5.42, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!108 &3138837658836981741
 Light:
   m_ObjectHideFlags: 0
@@ -3043,14 +3043,14 @@ Light:
   serializedVersion: 10
   m_Type: 0
   m_Shape: 0
-  m_Color: {r: 0.6238519, g: 0.7410549, b: 0.9811321, a: 1}
+  m_Color: {r: 0.19433957, g: 0.40912297, b: 1, a: 1}
   m_Intensity: 25
   m_Range: 10
-  m_SpotAngle: 138.32745
-  m_InnerSpotAngle: 0
+  m_SpotAngle: 128.84305
+  m_InnerSpotAngle: 86.08924
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 2
+    m_Type: 1
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1
@@ -3108,7 +3108,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Version: 3
   m_UsePipelineSettings: 1
-  m_AdditionalLightsShadowResolutionTier: 2
+  m_AdditionalLightsShadowResolutionTier: 1
   m_LightLayerMask: 1
   m_RenderingLayers: 1
   m_CustomShadowLayers: 0
@@ -3164,9 +3164,9 @@ MonoBehaviour:
   burstSize: {x: 1, y: 8}
   burstInterval: {x: 0.5, y: 2}
   fireRate: 0.1
-  accuracy: 0.01
+  accuracy: 0.05
   muzzleVelocity: 200
-  damage: 15
+  damage: 10
   projectilePrefab: {fileID: 7401076175922897801, guid: 563c02041c75c494caa243e035cb60b5,
     type: 3}
   muzzle: {fileID: 2966629834624807018}
@@ -4251,7 +4251,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   invert: 0
   passed: 0
-  awarenessValue: 25
+  awarenessValue: 35
   evalType: 1
 --- !u!1 &3901300896634085191
 GameObject:
@@ -4360,6 +4360,8 @@ MonoBehaviour:
   navMeshAgent: {fileID: 1983624430024106670}
   suspicionTargetSensor: {fileID: 6006987710589066696}
   visualSensor: {fileID: 4718986041787261397}
+  hitpoints: {fileID: 0}
+  visualCollider: {fileID: 0}
 --- !u!1 &3925300970659841621
 GameObject:
   m_ObjectHideFlags: 0
@@ -4947,9 +4949,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8fc0c748d2043be4d9b19341ef33593c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  frontFace: {x: 1, y: 2, z: -1}
-  middleFace: {x: 20, y: 6, z: 15}
-  backFace: {x: 10, y: 6, z: 45}
+  frontFace: {x: 1.5, y: 2, z: -1}
+  middleFace: {x: 15, y: 7, z: 7.5}
+  backFace: {x: 15, y: 5, z: 30}
   FOVEyeHeight: 0
 --- !u!54 &28630645126552927
 Rigidbody:
@@ -4994,11 +4996,12 @@ MonoBehaviour:
   teamIndex: 1
   raycastLayerMask:
     serializedVersion: 2
-    m_Bits: 65
+    m_Bits: 131137
   agentEye: {fileID: 3315451860368751774}
   localVisibleTargets: []
   LOSRadius: 0
   combatantServices: {fileID: 5240666363389620370}
+  hitObject: {fileID: 0}
 --- !u!1 &4251386691156466047
 GameObject:
   m_ObjectHideFlags: 0
@@ -5043,7 +5046,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13a04ba0e7f743e4190b69f974bc87bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  aimSpeed: 5
+  aimSpeed: 2.5
 --- !u!1 &4274700432738103153
 GameObject:
   m_ObjectHideFlags: 0
@@ -5891,7 +5894,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0f59d5477d171d48a91f32117d465e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  aimSpeed: 10
+  aimSpeed: 5
 --- !u!1 &5094504623739150419
 GameObject:
   m_ObjectHideFlags: 0
@@ -6909,9 +6912,9 @@ MonoBehaviour:
   burstSize: {x: 4, y: 6}
   burstInterval: {x: 0.25, y: 0.5}
   fireRate: 0.1
-  accuracy: 0.025
+  accuracy: 0.1
   muzzleVelocity: 200
-  damage: 15
+  damage: 10
   projectilePrefab: {fileID: 7401076175922897801, guid: 563c02041c75c494caa243e035cb60b5,
     type: 3}
   muzzle: {fileID: 2966629834624807018}
@@ -7205,9 +7208,9 @@ MonoBehaviour:
   burstSize: {x: 4, y: 6}
   burstInterval: {x: 0.25, y: 0.5}
   fireRate: 0.1
-  accuracy: 0.025
+  accuracy: 0.1
   muzzleVelocity: 200
-  damage: 15
+  damage: 10
   projectilePrefab: {fileID: 7401076175922897801, guid: 563c02041c75c494caa243e035cb60b5,
     type: 3}
   muzzle: {fileID: 2966629834624807018}
@@ -7543,7 +7546,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0f59d5477d171d48a91f32117d465e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  aimSpeed: 10
+  aimSpeed: 5
 --- !u!1 &6441600787913872705
 GameObject:
   m_ObjectHideFlags: 0
@@ -8239,8 +8242,8 @@ MonoBehaviour:
   currentAwareness: 0
   maxAwareness: 100
   currentMinAwareness: 0
-  awarenessLoseRate: 20
-  awarenessLoseDelay: 4
+  awarenessLoseRate: 30
+  awarenessLoseDelay: 3
 --- !u!1 &7011919025492963001
 GameObject:
   m_ObjectHideFlags: 0
@@ -8415,7 +8418,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0f59d5477d171d48a91f32117d465e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  aimSpeed: 10
+  aimSpeed: 5
 --- !u!1 &7162367545532842744
 GameObject:
   m_ObjectHideFlags: 0
@@ -8513,7 +8516,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0f59d5477d171d48a91f32117d465e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  aimSpeed: 10
+  aimSpeed: 5
 --- !u!1 &7407378639392682252
 GameObject:
   m_ObjectHideFlags: 0
@@ -9704,6 +9707,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   suspicionTarget: {fileID: 3639500791066013417}
   visualCollider: {fileID: 5251174588404182151}
+  hitpoints: {fileID: 0}
 --- !u!114 &3639500791066013417
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9717,9 +9721,63 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CombatantID: {fileID: 0}
-  suspicionValueMinMax: {x: 5, y: 51}
+  suspicionValueMinMax: {x: 50, y: 300}
   range: 100
   rangeFalloffCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 1
+      outSlope: 1
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 1
+      outSlope: 1
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  fuzzyLocation: 1
+  fuzzyDistanceMinMax: {x: 0, y: 50}
+  fuzzyDistanceRange: 75
+  fuzzyLocationFalloffCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  instantaneous: 0
+  useNavMeshDistance: 1
+  affectedByAngle: 1
+  angleDetectionCurve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
@@ -9743,43 +9801,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  fuzzyLocation: 1
-  fuzzyDistanceMinMax: {x: 0, y: 30}
-  fuzzyDistanceRange: 75
-  fuzzyLocationFalloffCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 1
-      outSlope: 1
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: 1
-      outSlope: 1
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  instantaneous: 0
-  useNavMeshDistance: 1
-  affectedByAngle: 0
-  angleDetectionCurve:
-    serializedVersion: 2
-    m_Curve: []
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  angleMinMax: {x: 0, y: 0}
+  angleMinMax: {x: 0, y: 110}
+  maxSuspicion: 51
 --- !u!135 &5251174588404182151
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -10006,8 +10029,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: edf071bc544d89e4db3df16b8b330e9c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameObjectToDestroy: {fileID: 1486392191709031346}
-  delay: 1
+  gameObjectToDestroy: {fileID: 6869168172182134387}
+  delay: 0
 --- !u!1 &8884552737104499621
 GameObject:
   m_ObjectHideFlags: 0
@@ -10054,7 +10077,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   invert: 0
   passed: 0
-  arrivalDistance: 0.5
+  arrivalDistance: 0.1
 --- !u!1 &8890816695927043211
 GameObject:
   m_ObjectHideFlags: 0
@@ -10290,7 +10313,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0f59d5477d171d48a91f32117d465e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  aimSpeed: 10
+  aimSpeed: 5
 --- !u!1 &8984332450532914631
 GameObject:
   m_ObjectHideFlags: 0

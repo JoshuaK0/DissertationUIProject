@@ -18,6 +18,8 @@ public class CombatantEnemyVisualSensor : MonoBehaviour
 
 	AwarenessManager awarenessManager;
 
+	[SerializeField] Transform hitObject;
+
 	
 
 	void Start()
@@ -66,6 +68,7 @@ public class CombatantEnemyVisualSensor : MonoBehaviour
 			if (localVisibleTargets.Contains(visualSuspicionController))
 			{
 				localVisibleTargets.Remove(visualSuspicionController);
+				suspicionManager.RemoveSuspicionTarget(visualSuspicionController.GetSuspicionTarget());
 				squadTargetManager.RemoveTarget(visualSuspicionController.GetSuspicionTarget().GetCombatantID());
 			}
 /*			SuspicionTarget suspicionTarget = visualSuspicionController.GetSuspicionTarget();
@@ -90,12 +93,12 @@ public class CombatantEnemyVisualSensor : MonoBehaviour
 
 		foreach (VisualSuspicionController combatant in targetsInFOVCollider)
 		{
-			CombatantHitpoints hitpoints = combatant.GetComponent<CombatantHitpoints>();
-			Vector3 hitpointPos = combatant.transform.position;
-			if (hitpoints != null)
+			CombatantHitpoints hitpoints = combatant.GetHitpoints();
+			if(hitpoints == null)
 			{
-				hitpointPos = hitpoints.GetHitpoint().position;
+				Debug.Log(combatant.transform);
 			}
+			Vector3 hitpointPos = hitpoints.GetHitpoint().position;
 			
 			if (IsVisible(hitpointPos, combatant))
 			{
@@ -136,10 +139,11 @@ public class CombatantEnemyVisualSensor : MonoBehaviour
 	bool IsVisible(Vector3 pos, VisualSuspicionController combatant)
 	{
 		Vector3 direction = pos - agentEye.position;
-		Debug.DrawRay(agentEye.position, pos);
+		Debug.DrawLine(pos, agentEye.position);
 		if (Physics.SphereCast(agentEye.position, LOSRadius, direction, out RaycastHit hit, Mathf.Infinity, raycastLayerMask, QueryTriggerInteraction.Collide))
 		{
-			if(hit.collider == combatant.GetVisualCollider())
+			hitObject = hit.collider.transform;
+			if (hit.collider == combatant.GetVisualCollider())
 			{
 				return true;
 			}
@@ -150,9 +154,9 @@ public class CombatantEnemyVisualSensor : MonoBehaviour
 	public bool IsCombatantVisible(Vector3 pos, CombatantID combatant)
 	{
 		Vector3 direction = pos - agentEye.position;
-		if (Physics.SphereCast(agentEye.position, LOSRadius, direction, out RaycastHit hit, Mathf.Infinity, raycastLayerMask))
+		if (Physics.SphereCast(agentEye.position, LOSRadius, direction, out RaycastHit hit, Mathf.Infinity, raycastLayerMask, QueryTriggerInteraction.Collide))
 		{
-			return (hit.rigidbody) && (hit.rigidbody.transform == combatant.transform);
+			return  (hit.collider) && (hit.collider == combatant.GetCombatantServices().GetVisualCollider());
 		}
 		return false;
 	}

@@ -20,7 +20,7 @@ public class SquadTarget: MonoBehaviour
 	{
 		if(combatantID != null)
 		{
-			hitpoints = combatantID.GetComponent<CombatantHitpoints>();
+			hitpoints = combatantID.GetCombatantServices().GetHitpoints();
 			if(hitpoints.GetHitpoint() == null )
 			{
 				Debug.Log("Cant find hitpoints");
@@ -79,7 +79,7 @@ public class SquadTarget: MonoBehaviour
 	{
 		if (hitpoints == null)
 		{
-			hitpoints = combatantID.GetComponent<CombatantHitpoints>();
+			hitpoints = combatantID.GetCombatantServices().GetHitpoints();
 		}
 		transform.position = hitpoints.GetHitpoint().position;
 		lastSpottedPosition = hitpoints.GetHitpoint().position;

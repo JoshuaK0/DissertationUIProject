@@ -7,6 +7,8 @@ public class MouseLook : MonoBehaviour
 	public Transform cameraTransform;
 	public float mouseSensitivity;
 
+	public Transform rotationPivot; // The predetermined pivot point for rotation
+
 	private float verticalRotation = 0f;
 
 	public bool isRigidbody;
@@ -17,7 +19,6 @@ public class MouseLook : MonoBehaviour
 	void Update()
 	{
 		// Mouse movement
-		
 		mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity;
 
 		// Rotate the camera for up/down look
@@ -31,17 +32,23 @@ public class MouseLook : MonoBehaviour
 		{
 			cameraPivot.eulerAngles = cameraPivot.eulerAngles + new Vector3(0f, mouseX, 0f);
 		}
-		
+
 	}
 
 	void FixedUpdate()
 	{
-		if(isRigidbody)
+		if (isRigidbody)
 		{
-			
-			Quaternion horizontalRotation = Quaternion.Euler(0f, mouseX, 0f);
-			playerRigidbody.MoveRotation(playerRigidbody.rotation * horizontalRotation);
+			// Calculate rotation around predetermined point
+			RotateAroundPoint(playerRigidbody, rotationPivot.position, Quaternion.Euler(0f, mouseX, 0f));
 		}
-		
+	}
+
+	void RotateAroundPoint(Rigidbody rb, Vector3 point, Quaternion rotation)
+	{
+		Vector3 direction = rb.position - point; // Direction from pivot to object
+		direction = rotation * direction; // Rotate the direction
+		rb.MovePosition(point + direction); // Move to the new position
+		rb.MoveRotation(rb.rotation * rotation); // Rotate the rigidbody
 	}
 }

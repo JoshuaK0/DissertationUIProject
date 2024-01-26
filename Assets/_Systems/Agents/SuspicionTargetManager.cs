@@ -36,6 +36,7 @@ public class SuspicionTargetManager : MonoBehaviour, IKillable
 		}
 		if(target.IsInstantaneous())
 		{
+			
 			float distance = Mathf.Infinity;
 			if (target.UseNavMeshDistance())
 			{
@@ -58,7 +59,21 @@ public class SuspicionTargetManager : MonoBehaviour, IKillable
 				distance = Vector3.Distance(combatantServiceLocator.GetCombatantID().transform.position, target.transform.position);
 			}
 			float awarenessAmount = target.GetDistanceMultiplier(distance);
-			awarenessManager.GainInstantaneousAwareness(target.GetSuspicionValue(awarenessAmount));
+			if (target.GetMaxSuspicion() != 0)
+			{
+				if (awarenessManager.GetCurrentAwareness() + target.GetSuspicionValue(awarenessAmount) < target.GetMaxSuspicion())
+				{
+					awarenessManager.GainInstantaneousAwareness(target.GetSuspicionValue(awarenessAmount));
+				}
+				else if (awarenessManager.GetCurrentAwareness() < target.GetMaxSuspicion())
+				{
+					awarenessManager.SetCurrentAwareness(target.GetMaxSuspicion());
+				}
+			}
+			else
+			{
+				awarenessManager.GainInstantaneousAwareness(target.GetSuspicionValue(awarenessAmount));
+			}
 		}
 		if (!suspicionTargets.Contains(target) || target.IsInstantaneous())
 		{
@@ -125,15 +140,43 @@ public class SuspicionTargetManager : MonoBehaviour, IKillable
 					float distanceMultiplier = target.GetDistanceMultiplier(distance);
 					float angleMultiplier = target.GetAngleMultiplier(angle);
 					float multiplier = distanceMultiplier * angleMultiplier;
-					float awarenessAmount = target.GetSuspicionValue(angleMultiplier);
-					awarenessManager.GainAwarenessOverTime(awarenessAmount);
+					float awarenessAmount = target.GetSuspicionValue(multiplier);
+					if (target.GetMaxSuspicion() != 0)
+					{
+						if (awarenessManager.GetCurrentAwareness() + (awarenessAmount * Time.deltaTime) < target.GetMaxSuspicion())
+						{
+							awarenessManager.GainAwarenessOverTime(awarenessAmount);
+						}
+						else if (awarenessManager.GetCurrentAwareness() < target.GetMaxSuspicion())
+						{
+							awarenessManager.SetCurrentAwareness(target.GetMaxSuspicion());
+						}
+					}
+					else
+					{
+						awarenessManager.GainAwarenessOverTime(awarenessAmount);
+					}
 				}
 				else
 				{
 					float distance = GetDistance(target, target.UseNavMeshDistance());
 					float distanceMultiplier = target.GetDistanceMultiplier(distance);
 					float awarenessAmount = target.GetSuspicionValue(distanceMultiplier);
-					awarenessManager.GainAwarenessOverTime(awarenessAmount);
+					if (target.GetMaxSuspicion() != 0)
+					{
+						if (awarenessManager.GetCurrentAwareness() + (awarenessAmount * Time.deltaTime) < target.GetMaxSuspicion())
+						{
+							awarenessManager.GainAwarenessOverTime(awarenessAmount);
+						}
+						else if (awarenessManager.GetCurrentAwareness() < target.GetMaxSuspicion())
+						{
+							awarenessManager.SetCurrentAwareness(target.GetMaxSuspicion());
+						}
+					}
+					else
+					{
+						awarenessManager.GainAwarenessOverTime(awarenessAmount);
+					}
 				}
 			}
 			
@@ -173,7 +216,7 @@ public class SuspicionTargetManager : MonoBehaviour, IKillable
 				{
 					if (squadTarget.combatantID == target.GetCombatantID())
 					{
-						if (!target.HasFuzzyLocation())
+						if (!target.HasFuzzyLocation() && squadTarget.isVisible())
 						{
 							squadTarget.UpdateLKP();
 						}

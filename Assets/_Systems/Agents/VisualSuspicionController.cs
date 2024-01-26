@@ -6,6 +6,7 @@ public class VisualSuspicionController : MonoBehaviour
 {
 	[SerializeField] SuspicionTarget suspicionTarget;
 	[SerializeField] Collider visualCollider;
+	[SerializeField] CombatantHitpoints hitpoints;
 
 	public SuspicionTarget GetSuspicionTarget()
 	{
@@ -15,5 +16,10 @@ public class VisualSuspicionController : MonoBehaviour
 	public Collider GetVisualCollider()
 	{
 		return visualCollider;
+	}
+
+	public CombatantHitpoints GetHitpoints()
+	{
+		return hitpoints;
 	}
 }

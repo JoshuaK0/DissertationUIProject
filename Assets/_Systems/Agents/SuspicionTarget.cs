@@ -17,10 +17,29 @@ public class SuspicionTarget : MonoBehaviour
 	[SerializeField] bool affectedByAngle;
 	[SerializeField] AnimationCurve angleDetectionCurve;
 	[SerializeField] Vector2 angleMinMax;
+	[SerializeField] float maxSuspicion = 0;
+
+	[SerializeField] float multiplier = 1;
+	[SerializeField] int priority;
 
 	float currentFuzzyRadius = 0;
 
 	Vector3 currentLocation;
+
+	public int GetPriority()
+	{
+		return priority;
+	}
+
+	public void SetMultiplier(float newMultiplier)
+	{
+		multiplier = newMultiplier;
+	}
+
+	public float GetMaxSuspicion()
+	{
+		return maxSuspicion;
+	}
 
 	public bool AffectedByAngle()
 	{
@@ -62,8 +81,8 @@ public class SuspicionTarget : MonoBehaviour
 		}
 		else if (angle > angleMinMax.x)
 		{
-			float lerpValue = 1 - Mathf.InverseLerp(angleMinMax.x, angleMinMax.y, angle);
-			return angleDetectionCurve.Evaluate(lerpValue);
+			float lerpValue = Mathf.InverseLerp(angleMinMax.x, angleMinMax.y, angle);
+			return angleDetectionCurve.Evaluate(1 - lerpValue);
 		}
 		else
 		{
@@ -74,15 +93,15 @@ public class SuspicionTarget : MonoBehaviour
 	{
 		if(distance <= range)
 		{
-			float lerpValue = rangeFalloffCurve.Evaluate(Mathf.InverseLerp(0, range, distance));
+			float lerpValue = rangeFalloffCurve.Evaluate(1 - Mathf.InverseLerp(0, range, distance));
 			return lerpValue;
 		}
 		return 0;
 	}
 
-	public float GetSuspicionValue(float multiplier)
+	public float GetSuspicionValue(float inputMultiplier)
 	{
-		return Mathf.Lerp(suspicionValueMinMax.x, suspicionValueMinMax.y, multiplier);
+		return Mathf.Lerp(suspicionValueMinMax.x, suspicionValueMinMax.y, inputMultiplier) * multiplier;
 	}
 
 	public CombatantID GetCombatantID()

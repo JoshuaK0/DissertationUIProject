@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class MoveToSuspicionBehaviour : FSMBehaviour
 {
@@ -10,12 +11,17 @@ public class MoveToSuspicionBehaviour : FSMBehaviour
 
 	SuspicionTarget closestTarget;
 	SuspicionTarget previousTarget;
+
+	NavMeshAgent agent;
+	CombatantEnemyVisualSensor sensor;
 	public override void EnterBehaviour()
 	{
 		closestTarget = null;
 		previousTarget = null;
 		combatantFSM = fsm.GetComponent<CombatantFSM>();
-		
+		agent = combatantFSM.GetCombatantServices().GetNavMeshAgent();
+		sensor = combatantFSM.GetCombatantServices().GetVisualSensor();
+
 	}
 
 	public override void UpdateBehaviour()
@@ -44,5 +50,26 @@ public class MoveToSuspicionBehaviour : FSMBehaviour
 			previousTarget = closestTarget;
 			combatantFSM.SetNavDestination(closestTarget.GetCurrentLocation());
 		}
+
+		if(sensor.PointHasLOS(closestTarget.GetCurrentLocation()))
+		{
+			agent.updateRotation = false;
+			var lookPos = closestTarget.GetCurrentLocation() - combatantFSM.transform.position;
+			lookPos.y = 0;
+			if (lookPos != Vector3.zero)
+			{
+				var rotation = Quaternion.LookRotation(lookPos);
+				combatantFSM.transform.rotation = Quaternion.Slerp(combatantFSM.transform.rotation, rotation, Time.deltaTime * 5);
+			}
+		}
+		else
+		{
+			agent.updateRotation = true;
+		}
+	}
+
+	public override void ExitBehaviour()
+	{
+		agent.updateRotation = true;
 	}
 }

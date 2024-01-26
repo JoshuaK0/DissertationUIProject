@@ -27,6 +27,20 @@ public class SquadManager : MonoBehaviour
 		}
 	}
 
+
+	public void Start()
+	{
+		for(int i = 0; i < squadMembers.Count; i++)
+		{
+			if(squadMembers[i].GetCombatantServices() != null)
+			{
+				if (squadMembers[i].GetCombatantServices().GetNavMeshAgent() != null)
+				{
+					squadMembers[i].GetCombatantServices().GetNavMeshAgent().avoidancePriority = i;
+				}
+			}
+		}
+	}
 	public void SetTeamMinAwareness(float newMinAwareness)
 	{
 		teamManager.SetTeamMinAwareness(newMinAwareness);
@@ -62,7 +76,7 @@ public class SquadManager : MonoBehaviour
 	{
 		foreach (CombatantID combatantID in squadMembers)
 		{
-			combatantID.GetCombatantServices().GetAwarenessManager().SetCurrentAwareness(newAwareness);
+			combatantID.GetCombatantServices().GetAwarenessManager().SetMinAwareness(newAwareness);
 		}
 	}
 }

@@ -66,6 +66,9 @@ public class TargetPositionMap : MonoBehaviour
 						Vector3 startPos = pos.position + (1.7f * Vector3.up);
 						Vector3 dir = squadTarget.lastSpottedPosition - startPos;
 						float dist = Vector3.Distance(startPos, squadTarget.lastSpottedPosition);
+
+						Debug.DrawLine(startPos, squadTarget.lastSpottedPosition);
+
 						RaycastHit LOShit;
 						if (!Physics.SphereCast(startPos, LOSRadius, dir, out LOShit, dist, LOSLayers))
 						{

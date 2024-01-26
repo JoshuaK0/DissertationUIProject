@@ -46,14 +46,18 @@ public class LinearBulletDamageDealer : MonoBehaviour, IDamageInflictable
 				//hit.transform.GetComponent<IDamageable>().TakeDamage(damage);
 				//hit.transform.GetComponent<IDamageable>().ApplyForce(transform.forward * force);
 				GameObject newEffect = Instantiate(hitCombatantEffect, hit.point, Quaternion.FromToRotation(Vector3.forward, effectRot));
-				newEffect.GetComponent<BulletEffect>().PlayEffect();
+				BulletEffect bulletEffect = newEffect.GetComponent<BulletEffect>();
+				bulletEffect.transform.parent = hit.collider.transform;
+				bulletEffect.PlayEffect();
 			}
 			else
 			{
 				Vector3 effectRot = (-transform.forward.normalized * environmentDirBlend) + (hit.normal.normalized * (1 - environmentDirBlend));
 
 				GameObject newEffect = Instantiate(hitEnvironmentEffect, hit.point, Quaternion.FromToRotation(Vector3.forward, effectRot));
-				newEffect.GetComponent<BulletEffect>().PlayEffect();
+				BulletEffect bulletEffect = newEffect.GetComponent<BulletEffect>();
+				bulletEffect.transform.parent = hit.collider.transform;
+				bulletEffect.PlayEffect();
 			}
 		}
 	}

@@ -61,12 +61,33 @@ public class GunController : FiniteStateMachine
     [SerializeField] GameObject moderateAmmoTracers;
     [SerializeField] GameObject lowAmmoTracers;
 
+    [SerializeField] float leanAngle;
+	[SerializeField] float verticalLeanDistance;
+	[SerializeField] float viewmodelLeanAngle;
+	[SerializeField] float leanSpeed;
+	[SerializeField] float viewmodelLeanSpeed;
+	[SerializeField] Transform viewmodelLeanPivotTarget;
+    [SerializeField] Transform leanPivotTarget;
+
+    Transform leanPivotPoint;
+
+	float currentLeanAmount;
+    float currentLeanRot;
+    float currentViewmodelLeanRot;
+	float currentViewmodelLeanAmount;
+
 	bool isReloading;
 
 
 	public override void Start()
     {
-        base.Start();
+		leanPivotPoint = new GameObject("Lean Pivot Point").transform;
+		leanPivotPoint.parent = leanPivotTarget.parent;
+		leanPivotPoint.localPosition = leanPivotTarget.localPosition;
+        leanPivotPoint.localRotation = leanPivotTarget.localRotation;
+        leanPivotPoint.localPosition += -Vector3.up * verticalLeanDistance;
+		leanPivotTarget.parent = leanPivotPoint;
+		base.Start();
         
 		gunSwayVisuals.parent = ADSSwayPivot;
 		gunSwayVisuals.localPosition = -ADSSwayPivot.localPosition;
@@ -95,8 +116,36 @@ public class GunController : FiniteStateMachine
 	}
 	public override void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            if(currentLeanAmount == leanAngle)
+            {
+				currentLeanAmount = 0;
+                currentViewmodelLeanAmount = 0;
+			}
+            else
+            {
+				currentLeanAmount = leanAngle;
+                currentViewmodelLeanAmount = viewmodelLeanAngle;
+			}
+		}
+		if (Input.GetKeyDown(KeyCode.E))
+		{
+			if (currentLeanAmount == -leanAngle)
+			{
+				currentLeanAmount = 0;
+                currentViewmodelLeanAmount = 0;
+			}
+            else
+            {
+			    currentLeanAmount = -leanAngle;
+                currentViewmodelLeanAmount = -viewmodelLeanAngle;
+			}
+		}
+
+        DoLean();
         
-        viewmodel.localPosition = ADSSpring.GetValue();
+		viewmodel.localPosition = ADSSpring.GetValue();
         base.Update();
 
 		if (isADS)
@@ -172,6 +221,33 @@ public class GunController : FiniteStateMachine
         UpdateFOV();
         UpdatePrecision();
     }
+
+    void DoLean()
+    {
+		currentLeanRot = Mathf.LerpAngle(currentLeanRot, currentLeanAmount, leanSpeed * Time.deltaTime);
+
+		if (Mathf.Abs(currentLeanRot - currentLeanAmount) <= 1)
+        {
+			currentLeanRot = currentLeanAmount;
+		}
+        else if (Mathf.Abs(currentLeanRot) <= 1)
+        {
+			currentLeanRot = 0f;
+        }
+		
+        currentViewmodelLeanRot = Mathf.LerpAngle(currentViewmodelLeanRot, currentViewmodelLeanAmount, viewmodelLeanSpeed * Time.deltaTime);
+		if (Mathf.Abs(currentViewmodelLeanRot - currentViewmodelLeanAmount) <= 1)
+		{
+			currentViewmodelLeanRot = currentViewmodelLeanAmount;
+		}
+		else if (Mathf.Abs(currentViewmodelLeanRot) <= 1)
+		{
+			currentViewmodelLeanRot = 0f;
+		}
+
+		leanPivotPoint.localEulerAngles = new Vector3(0, 0, currentLeanRot);
+        viewmodelLeanPivotTarget.localEulerAngles = Vector3.forward * currentViewmodelLeanRot;
+	}
 
     void Reload()
     {

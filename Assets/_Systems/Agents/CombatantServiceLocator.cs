@@ -14,6 +14,19 @@ public class CombatantServiceLocator : MonoBehaviour
 	[SerializeField] NavMeshAgent navMeshAgent;
 	[SerializeField] SuspicionTargetManager suspicionTargetSensor;
 	[SerializeField] CombatantEnemyVisualSensor visualSensor;
+	[SerializeField] CombatantHitpoints hitpoints;
+	[SerializeField] Collider visualCollider;
+
+	public Collider GetVisualCollider()
+	{
+		return visualCollider;
+	}
+
+
+	public CombatantHitpoints GetHitpoints()
+	{
+		return hitpoints;
+	}
 
 	public CombatantEnemyVisualSensor GetVisualSensor()
 	{
