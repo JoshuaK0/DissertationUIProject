@@ -8,9 +8,12 @@ public class GunsmithManager : MonoBehaviour
 {
     public static GunsmithManager instance;
 
-    [SerializeField] List<GunsmithPart> parts;
+    [SerializeField]
+    Dictionary<GunsmithPart, GameObject> parts = new Dictionary<GunsmithPart, GameObject>();
 
-    [SerializeField] GunsmithPartDatabase partDatabase;
+    [SerializeField] List<GameObject> partPrefabs;
+
+	[SerializeField] GunsmithPartDatabase partDatabase;
 
     [SerializeField] Transform partParent;
 
@@ -28,6 +31,11 @@ public class GunsmithManager : MonoBehaviour
         selectedPart = part;
     }
 
+    public List<GameObject> GetPrefabs()
+    {
+		return partPrefabs;
+	}
+
     public static GunsmithManager Instance()
     {
         return instance;
@@ -36,22 +44,23 @@ public class GunsmithManager : MonoBehaviour
     void Awake()
     {
         instance = this;
-        AddMissingPart(partDatabase.GetPartTypeCollections()[0].GetParts()[0]);
+		AddMissingPart(partDatabase.GetPartTypeCollections()[0].GetParts()[0]);
     }
 
     public List<GunsmithPart> GetParts()
     {
-        return parts;
-    }
+		return parts.Keys.ToList();
+	}
 
     public void AddPartThroughButton(GameObject newPart)
     {
         Vector3 instantiatePos = Vector3.zero;
-        string partType = newPart.GetComponent<GunsmithPart>().GetPartType();
-        foreach (GunsmithPart part in parts)
+		PartType partType = newPart.GetComponent<GunsmithPart>().GetPartType();
+        foreach (GunsmithPart part in parts.Keys)
         {
             if (part.GetPartType() == partType)
             {
+                selectedPart = part;
                 instantiatePos = part.transform.position;
             }
         }
@@ -68,24 +77,36 @@ public class GunsmithManager : MonoBehaviour
         GameObject newPartGameObject = Instantiate(newPart, instantiatePos, Quaternion.identity, partParent);
         newPartGameObject.transform.localEulerAngles = Vector3.zero;
 
-        parts.Add(newPartGameObject.GetComponent<GunsmithPart>());
+        parts.Add(newPartGameObject.GetComponent<GunsmithPart>(), newPart);
+
+        
         newPartGameObject.GetComponent<GunsmithPart>().AttatchParts();
 
-        newPartGameObject.GetComponent<GunsmithPart>().CreateUI();
+		if (GunsmithUIManager.Instance() != null)
+		{
+			newPartGameObject.GetComponent<GunsmithPart>().CreateUI();
+		}
 
-        selectedPart = newPartGameObject.GetComponent<GunsmithPart>();
-    }
+		selectedPart = newPartGameObject.GetComponent<GunsmithPart>();
+		partPrefabs = parts.Values.ToList();
+	}
 
     public void AddMissingPart(GameObject newPart)
     {
         GameObject newPartGameObject = Instantiate(newPart, Vector3.zero, Quaternion.identity, partParent);
         newPartGameObject.transform.localEulerAngles = Vector3.zero;
         
-        parts.Add(newPartGameObject.GetComponent<GunsmithPart>());
+        parts.Add(newPartGameObject.GetComponent<GunsmithPart>(), newPart);
         newPartGameObject.GetComponent<GunsmithPart>().AttatchParts();
-        
-        newPartGameObject.GetComponent<GunsmithPart>().CreateUI();
-    }
+
+		if (GunsmithUIManager.Instance() != null)
+		{
+			newPartGameObject.GetComponent<GunsmithPart>().CreateUI();
+		}
+
+		partPrefabs = parts.Values.ToList();
+
+	}
 
     public void RemovePart(GunsmithPart partToRemove)
     {
@@ -100,11 +121,11 @@ public class GunsmithManager : MonoBehaviour
     void Update()
     {
         
-        foreach (GunsmithPart part in parts)
+        foreach (GunsmithPart part in parts.Keys)
         {
             part.AttatchParts();
         }
-        foreach (GunsmithPart part in parts.ToList())
+        foreach (GunsmithPart part in parts.Keys.ToList())
         {
             part.FillInMissingParts();
         }

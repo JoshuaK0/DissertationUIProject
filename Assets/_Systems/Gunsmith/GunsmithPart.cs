@@ -4,15 +4,18 @@ using System.Linq;
 using UnityEngine;
 public class GunsmithPart : MonoBehaviour
 {
-    [SerializeField] string partType;
-    [SerializeField] List<GunsmithAttatchmentPoint> attatchmentPoints;
+    [SerializeField] PartType partType;
+    [SerializeField] List<GunsmithAttatchmentPoint> attatchmentPoints = new List<GunsmithAttatchmentPoint>();
 
     [SerializeField] GameObject labelButton;
 
     public void CreateUI()
     {
-        labelButton = Instantiate(GunsmithUIManager.Instance().GetPartLabelButton(), Vector3.zero, Quaternion.identity, GunsmithUIManager.Instance().GetUICanvas()); ;
-        labelButton.GetComponent<GunsmithPartLabel>().InitButton(this, partType);
+        if(GunsmithUIManager.Instance()!= null)
+        {
+			labelButton = Instantiate(GunsmithUIManager.Instance().GetPartLabelButton(), Vector3.zero, Quaternion.identity, GunsmithUIManager.Instance().GetUICanvas());
+			labelButton.GetComponent<GunsmithPartLabel>().InitButton(this, partType);
+		}
     }
     public void AttatchParts()
     {
@@ -33,12 +36,19 @@ public class GunsmithPart : MonoBehaviour
                         {
                             attatchFromPoint.SetAttatchmentPoint(attatchToPoint);
 
-                            if (partType != "Reciever")
+                            if (partType != PartType.Receiver)
                             {
-                                if(partType != "Barrel" || part.GetPartType() != "Muzzle")
+                                if(partType != PartType.Barrel || part.GetPartType() != PartType.Muzzle)
                                 {
                                     Vector3 targetPos = attatchToPoint.transform.localPosition + attatchToPoint.GetOwnerPart().transform.localPosition - attatchFromPoint.transform.localPosition;
-                                    transform.localPosition = Vector3.Slerp(transform.localPosition, targetPos, GunsmithManager.Instance().GetPartMoveSpeed() * Time.deltaTime);
+                                    if(GunsmithManager.Instance().GetPartMoveSpeed() > 0)
+                                    {
+										transform.localPosition = Vector3.Slerp(transform.localPosition, targetPos, GunsmithManager.Instance().GetPartMoveSpeed() * Time.deltaTime);
+									}
+                                    else
+                                    {
+										transform.localPosition = targetPos;
+									}
                                     transform.localRotation = attatchToPoint.transform.localRotation;
                                 }
                             }
@@ -61,7 +71,7 @@ public class GunsmithPart : MonoBehaviour
         }
     }
     
-    public string GetPartType()
+    public PartType GetPartType()
     {
         return partType;
     }

@@ -6,15 +6,15 @@ using static UnityEngine.GraphicsBuffer;
 
 public class GunsmithPartLabel : MonoBehaviour
 {
-    string partType;
+	PartType partType;
     [SerializeField] GunsmithPart part;
 
     [SerializeField] TMP_Text text;
-    public void InitButton(GunsmithPart ownerPart, string newType)
+    public void InitButton(GunsmithPart ownerPart, PartType newType)
     {
         partType = newType;
         this.part = ownerPart;
-        text.text = partType;
+        //text.text = partType.ToString();
     }
 
     public void OnButtonClicked()

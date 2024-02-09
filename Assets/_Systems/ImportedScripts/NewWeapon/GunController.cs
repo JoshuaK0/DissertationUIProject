@@ -30,7 +30,6 @@ public class GunController : FiniteStateMachine
     [SerializeField] Camera viewmodelCamera;
     [SerializeField] MouseLook mouseLook;
 
-    float startMouseSensitivity;
     float ADSSensitivity;
     
     [Header("Gun States")]
@@ -77,7 +76,14 @@ public class GunController : FiniteStateMachine
 	float currentViewmodelLeanAmount;
 
 	bool isReloading;
+	public delegate void ShotFiredEventHandler(int currentAmmo, Vector3 bulletDirection);
 
+	// Define the event based on the delegate
+	public event ShotFiredEventHandler OnShotFired;
+	public Transform GetMuzzlePos()
+    {
+		return muzzlePos;
+	}
 
 	public override void Start()
     {
@@ -96,8 +102,6 @@ public class GunController : FiniteStateMachine
 		currentAmmo = gunStats.magazineSize;
         startFOV = playerCameraComponent.fieldOfView;
 		viewmodelStartFOV = viewmodelCamera.fieldOfView;
-        startMouseSensitivity = mouseLook.mouseSensitivity;
-        ADSSensitivity = startMouseSensitivity * (gunStats.ADSFOV / startFOV);
 	}
 
 	public int GetCurrentAmmo()
@@ -116,17 +120,22 @@ public class GunController : FiniteStateMachine
 	}
 	public override void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Q))
+		if (Input.GetKeyDown(KeyCode.Q))
         {
             if(currentLeanAmount == leanAngle)
             {
 				currentLeanAmount = 0;
                 currentViewmodelLeanAmount = 0;
 			}
-            else
+            else if (currentLeanAmount == 0)
             {
 				currentLeanAmount = leanAngle;
                 currentViewmodelLeanAmount = viewmodelLeanAngle;
+			}
+            else if (currentLeanAmount == -leanAngle)
+            {
+				currentLeanAmount = 0;
+				currentViewmodelLeanAmount = 0;
 			}
 		}
 		if (Input.GetKeyDown(KeyCode.E))
@@ -136,10 +145,16 @@ public class GunController : FiniteStateMachine
 				currentLeanAmount = 0;
                 currentViewmodelLeanAmount = 0;
 			}
-            else
+            else if (currentLeanAmount == 0)
             {
 			    currentLeanAmount = -leanAngle;
                 currentViewmodelLeanAmount = -viewmodelLeanAngle;
+			}
+
+			else if (currentLeanAmount == leanAngle)
+			{
+				currentLeanAmount = 0;
+				currentViewmodelLeanAmount = 0;
 			}
 		}
 
@@ -269,7 +284,8 @@ public class GunController : FiniteStateMachine
     {
         if (isADS)
         {
-            mouseLook.mouseSensitivity = ADSSensitivity;
+			ADSSensitivity = mouseLook.GetBaseSensitivity() * (gunStats.ADSFOV / startFOV);
+			mouseLook.SetModifiedSensitivity(ADSSensitivity);
 			if (Mathf.Abs(gunStats.ADSFOV - playerCameraComponent.fieldOfView) > 0.1)
             {
                 playerCameraComponent.fieldOfView = Mathf.Lerp(playerCameraComponent.fieldOfView, gunStats.ADSFOV, gunStats.FOVSpeed * Time.deltaTime);
@@ -289,7 +305,7 @@ public class GunController : FiniteStateMachine
 		}
         else
         {
-			mouseLook.mouseSensitivity = startMouseSensitivity;
+			mouseLook.SetModifiedSensitivity(mouseLook.GetBaseSensitivity());
 			if (Mathf.Abs(startFOV - playerCameraComponent.fieldOfView) > 0.1)
 			{
 				playerCameraComponent.fieldOfView = Mathf.Lerp(playerCameraComponent.fieldOfView, startFOV, gunStats.FOVSpeed * Time.deltaTime);
@@ -313,11 +329,12 @@ public class GunController : FiniteStateMachine
     {
         inaccuracyPercent = Mathf.Clamp01(rb.velocity.magnitude / gunStats.precisionSpeedThreshold);
 		currentPrecision = Mathf.Lerp(gunStats.restPrecision, gunStats.movingPrecision, inaccuracyPercent);
-        spreadCrosshair.localScale = Vector3.one * inaccuracyPercent * spreadCrosshairScale;
+        spreadCrosshair.localScale = Vector3.one * Mathf.Max(inaccuracyPercent * spreadCrosshairScale, 1);
 	}
     void Fire()
     {
         weaponAnimator.OnFire();
+		
 		GameObject newBullet = Instantiate(gunStats.bulletProjectilePrefab, bulletOrientation.position, bulletOrientation.rotation);
 
 		CameraShaker.Shake(new BounceShake(gunStats.shakeParams));
@@ -326,13 +343,15 @@ public class GunController : FiniteStateMachine
 		randomInaccuracy.y = Random.Range(-currentPrecision, currentPrecision);
         newBullet.transform.eulerAngles += randomInaccuracy;
 
-		if(ammoCountTracers)
+		OnShotFired?.Invoke(currentAmmo, newBullet.transform.forward);
+
+		if (ammoCountTracers)
         {
             if((float)currentAmmo/ (float)GetMaxAmmo() <= 0.33f)
             {
                 GameObject newBulletTracer = Instantiate(lowAmmoTracers, muzzlePos.position, Quaternion.LookRotation(newBullet.transform.forward));
 				IProjectileTraceable tracer = newBulletTracer.GetComponent<IProjectileTraceable>();
-                tracer.InitProjectileTracer();
+                //tracer.InitProjectileTracer();
 			}
 			else if ((float)currentAmmo / (float)GetMaxAmmo() <= 0.66f)
             {
@@ -340,7 +359,7 @@ public class GunController : FiniteStateMachine
                 {
 					GameObject newBulletTracer = Instantiate(moderateAmmoTracers, muzzlePos.position, Quaternion.LookRotation(newBullet.transform.forward));
 					IProjectileTraceable tracer = newBulletTracer.GetComponent<IProjectileTraceable>();
-					tracer.InitProjectileTracer();
+					//tracer.InitProjectileTracer();
 				}
             }
 

@@ -9,9 +9,23 @@ public class LinearBulletTracer : MonoBehaviour, IProjectileTraceable
 	[SerializeField] float lifeTime;
     [SerializeField] Rigidbody rb;
 
-	public void InitProjectileTracer()
+	Vector3 dir;
+
+	bool fired = false;
+
+	public void InitProjectileTracer(Vector3 direction)
     {
-		rb.AddForce(transform.forward * muzzleVelocity, ForceMode.VelocityChange);
+		dir = direction;
+		
 		Destroy(gameObject, lifeTime);
+	}
+
+	public void FixedUpdate()
+	{
+		if (!fired)
+		{
+			rb.AddForce(dir.normalized * muzzleVelocity, ForceMode.VelocityChange);
+			fired = true;
+		}
 	}
 }

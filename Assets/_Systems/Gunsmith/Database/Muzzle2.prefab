@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4623390173365912789}
   - component: {fileID: 4817563033507526268}
   - component: {fileID: 7189741946041257972}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Cube (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -25,12 +25,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1149543977133207690}
+  serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.2812306, z: -0, w: 0.95964026}
   m_LocalPosition: {x: 0.0063, y: 0, z: 0.0092}
   m_LocalScale: {x: 0.04062242, y: 0.027871713, z: 0.03005407}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5474314883923239064}
-  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: -32.667, z: 0}
 --- !u!33 &4817563033507526268
 MeshFilter:
@@ -51,6 +52,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -92,7 +94,7 @@ GameObject:
   - component: {fileID: 3841018052902349351}
   - component: {fileID: 1288628191855477471}
   - component: {fileID: 1359536424386560258}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Cube (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -106,12 +108,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1792503567258674669}
+  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -5.349e-12, y: 0, z: 0.0046}
   m_LocalScale: {x: 0.030431814, y: 0.027871713, z: 0.05795192}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5474314883923239064}
-  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &1288628191855477471
 MeshFilter:
@@ -132,6 +135,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -173,7 +177,7 @@ GameObject:
   - component: {fileID: 7824675001616389471}
   - component: {fileID: 5187788449188002398}
   - component: {fileID: 1861934020004005608}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -187,12 +191,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3021244574436447201}
+  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -6.0344e-11, y: 0, z: -0.016951298}
   m_LocalScale: {x: 0.06420178, y: 0.027871713, z: 0.049522787}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5474314883923239064}
-  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &5187788449188002398
 MeshFilter:
@@ -213,6 +218,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -254,7 +260,7 @@ GameObject:
   - component: {fileID: 3974652636401161970}
   - component: {fileID: 1401385732701781478}
   - component: {fileID: 6325561243898302754}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Cube (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -268,12 +274,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6313135902421083411}
+  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0.28122786, z: 0, w: 0.95964104}
   m_LocalPosition: {x: -0.0067, y: 0, z: 0.0097}
   m_LocalScale: {x: 0.04062242, y: 0.027871713, z: 0.03005407}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5474314883923239064}
-  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 32.667, z: 0}
 --- !u!33 &1401385732701781478
 MeshFilter:
@@ -294,6 +301,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -334,7 +342,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1961123122975749416}
   - component: {fileID: 3686270783783236061}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: MuzzleAttachmentPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -348,12 +356,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8234834692850040369}
+  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -0.0417}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5474314883923239064}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &3686270783783236061
 MonoBehaviour:
@@ -367,7 +376,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7297a35383d669343a7616507b0afa7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attatchesToType: Barrel
+  attatchesToType: 0
   ownerPart: {fileID: 9081984258348812111}
   attatchedTo: {fileID: 0}
 --- !u!1 &8596989814920573893
@@ -380,7 +389,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5474314883923239064}
   - component: {fileID: 9081984258348812111}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Muzzle2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -394,9 +403,11 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8596989814920573893}
+  serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1961123122975749416}
   - {fileID: 7824675001616389471}
@@ -404,7 +415,6 @@ Transform:
   - {fileID: 4623390173365912789}
   - {fileID: 3974652636401161970}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &9081984258348812111
 MonoBehaviour:
@@ -418,7 +428,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 515013639c0372449b020b11192859f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  partType: Muzzle
+  partType: 4
   attatchmentPoints:
   - {fileID: 3686270783783236061}
   labelButton: {fileID: 0}

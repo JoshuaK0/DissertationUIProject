@@ -5,6 +5,8 @@ using UnityEngine;
 public class ChangePlayerHeightBehaviour : FSMBehaviour
 {
     [SerializeField] float playerHeight;
+    [SerializeField] Rigidbody rb;
+    [SerializeField] float downForce;
 
     float prevHeight;
 
@@ -12,10 +14,12 @@ public class ChangePlayerHeightBehaviour : FSMBehaviour
 
     public override void EnterBehaviour()
     {
-        pm = fsm.GetComponent<PlayerMovementFSM>();
+		rb.AddForce(Vector3.down * downForce, ForceMode.VelocityChange);
+		pm = fsm.GetComponent<PlayerMovementFSM>();
         prevHeight = pm.GetCurrentPlayerHeight();
         pm.SetCurrentPlayerHeight(playerHeight);
-    }
+		
+	}
 
     public override void ExitBehaviour()
     {

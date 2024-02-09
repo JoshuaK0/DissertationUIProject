@@ -34,6 +34,10 @@ public class SuspicionTargetManager : MonoBehaviour, IKillable
 		{
 			return;
 		}
+		if(target.IsInvestigated())
+		{
+			return;
+		}	
 		if(target.IsInstantaneous())
 		{
 			
@@ -75,24 +79,22 @@ public class SuspicionTargetManager : MonoBehaviour, IKillable
 				awarenessManager.GainInstantaneousAwareness(target.GetSuspicionValue(awarenessAmount));
 			}
 		}
-		if (!suspicionTargets.Contains(target) || target.IsInstantaneous())
+
+		if (!suspicionTargets.Contains(target))
 		{
-			if (!suspicionTargets.Contains(target))
-			{
-				suspicionTargets.Add(target);
-			}
+			suspicionTargets.Add(target);
+		}
 			
-			if(target.HasFuzzyLocation())
-			{
-				Vector3 exactPos = target.GetCombatantID().transform.position;
-				float distance = GetDistance(target, target.UseNavMeshDistance());
-				Vector3 fuzzyPos = FindRandomNavMeshLocation(exactPos, target.GetFuzzyRadius(distance));
-				target.SetCurrentLocation(fuzzyPos + (1.7f * Vector3.up));
-			}
-			else
-			{
-				target.SetCurrentLocation(target.GetCombatantID().transform.position);
-			}
+		if(target.HasFuzzyLocation())
+		{
+			Vector3 exactPos = target.GetCombatantID().transform.position;
+			float distance = GetDistance(target, target.UseNavMeshDistance());
+			Vector3 fuzzyPos = FindRandomNavMeshLocation(exactPos, target.GetFuzzyRadius(distance));
+			target.SetCurrentLocation(fuzzyPos + (1.7f * Vector3.up));
+		}
+		else
+		{
+			target.SetCurrentLocation(target.GetCombatantID().GetCombatantServices().GetHitpoints().GetHitpoint().position);
 		}
 	}
 

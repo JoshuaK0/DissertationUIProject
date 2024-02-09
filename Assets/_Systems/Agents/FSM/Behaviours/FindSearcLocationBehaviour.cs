@@ -157,6 +157,7 @@ public class FindSearchLocationBehaviour : FSMBehaviour
 	void SetNewSearchLocation()
 	{
 		combatantFSM.AgentUpdateRotation(true);
+
 		List<Vector3> sampledPoints = GetSampledPoints();
 		if(sampledPoints.Count > 0)
 		{
@@ -213,6 +214,7 @@ public class FindSearchLocationBehaviour : FSMBehaviour
 			}
 			else
 			{
+				combatantFSM.GetSuspicionTarget().SetInvestigated(true);
 				clearAreaBehaviour.ExitBehaviour();
 				fsm.ChangeState(exitBehaviour);
 			}

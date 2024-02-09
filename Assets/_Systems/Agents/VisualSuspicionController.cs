@@ -6,20 +6,22 @@ public class VisualSuspicionController : MonoBehaviour
 {
 	[SerializeField] SuspicionTarget suspicionTarget;
 	[SerializeField] Collider visualCollider;
-	[SerializeField] CombatantHitpoints hitpoints;
+	[SerializeField] List<ColliderVisibility> visibilityColliders = new List<ColliderVisibility>();
 
 	public SuspicionTarget GetSuspicionTarget()
 	{
 		return suspicionTarget;
 	}
 
-	public Collider GetVisualCollider()
+	public List<ColliderVisibility> GetVisibilityColliders()
 	{
-		return visualCollider;
+		return visibilityColliders;
 	}
+}
 
-	public CombatantHitpoints GetHitpoints()
-	{
-		return hitpoints;
-	}
+[System.Serializable]
+public class ColliderVisibility
+{
+	public Collider collider;
+	public float visibilityMultiplier; // 0 to 1, where 1 is full visibility
 }

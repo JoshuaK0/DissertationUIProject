@@ -93,14 +93,21 @@ public class CombatantEnemyVisualSensor : MonoBehaviour
 
 		foreach (VisualSuspicionController combatant in targetsInFOVCollider)
 		{
-			CombatantHitpoints hitpoints = combatant.GetHitpoints();
-			if(hitpoints == null)
+			float highestVisibility = 0;
+			Collider mostVisibleCollider = null;
+
+			foreach (var colliderVisibility in combatant.GetVisibilityColliders())
 			{
-				Debug.Log(combatant.transform);
+				if (IsColliderVisible(colliderVisibility.collider))
+				{
+					if (colliderVisibility.visibilityMultiplier > highestVisibility)
+					{
+						highestVisibility = colliderVisibility.visibilityMultiplier;
+						mostVisibleCollider = colliderVisibility.collider;
+					}
+				}
 			}
-			Vector3 hitpointPos = hitpoints.GetHitpoint().position;
-			
-			if (IsVisible(hitpointPos, combatant))
+			if (mostVisibleCollider != null)
 			{
 				if (!localVisibleTargets.Contains(combatant))
 				{
@@ -136,14 +143,14 @@ public class CombatantEnemyVisualSensor : MonoBehaviour
 		}
 	}
 
-	bool IsVisible(Vector3 pos, VisualSuspicionController combatant)
+	bool IsColliderVisible(Collider collider)
 	{
-		Vector3 direction = pos - agentEye.position;
-		Debug.DrawLine(pos, agentEye.position);
+		Vector3 direction = collider.transform.position - agentEye.position;
+		Debug.DrawLine(collider.transform.position, agentEye.position);
 		if (Physics.SphereCast(agentEye.position, LOSRadius, direction, out RaycastHit hit, Mathf.Infinity, raycastLayerMask, QueryTriggerInteraction.Collide))
 		{
 			hitObject = hit.collider.transform;
-			if (hit.collider == combatant.GetVisualCollider())
+			if (hit.collider == collider)
 			{
 				return true;
 			}
@@ -151,12 +158,14 @@ public class CombatantEnemyVisualSensor : MonoBehaviour
 		return false;
 	}
 
-	public bool IsCombatantVisible(Vector3 pos, CombatantID combatant)
+	public bool IsCombatantVisible(CombatantID combatant)
 	{
-		Vector3 direction = pos - agentEye.position;
-		if (Physics.SphereCast(agentEye.position, LOSRadius, direction, out RaycastHit hit, Mathf.Infinity, raycastLayerMask, QueryTriggerInteraction.Collide))
+		foreach (Collider hitpoint in combatant.GetCombatantServices().GetVisualColliders())
 		{
-			return  (hit.collider) && (hit.collider == combatant.GetCombatantServices().GetVisualCollider());
+			if (IsColliderVisible(hitpoint))
+			{
+				return true;
+			}
 		}
 		return false;
 	}

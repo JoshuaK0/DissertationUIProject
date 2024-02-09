@@ -337,7 +337,7 @@ TrailRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Time: 0.06
+  m_Time: 0.02
   m_PreviewTimeScale: 1
   m_Parameters:
     serializedVersion: 3
@@ -484,7 +484,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec69b985ab9c9af4cab20848f3e1a044, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  muzzleVelocity: 5
+  muzzleVelocity: 130
   lifeTime: 2
   rb: {fileID: 511963069}
 --- !u!114 &7218012979838162548

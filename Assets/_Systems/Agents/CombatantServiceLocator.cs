@@ -15,11 +15,11 @@ public class CombatantServiceLocator : MonoBehaviour
 	[SerializeField] SuspicionTargetManager suspicionTargetSensor;
 	[SerializeField] CombatantEnemyVisualSensor visualSensor;
 	[SerializeField] CombatantHitpoints hitpoints;
-	[SerializeField] Collider visualCollider;
+	[SerializeField] List<Collider> visualColliders;
 
-	public Collider GetVisualCollider()
+	public List<Collider> GetVisualColliders()
 	{
-		return visualCollider;
+		return visualColliders;
 	}
 
 

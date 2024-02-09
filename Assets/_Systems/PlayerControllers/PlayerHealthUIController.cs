@@ -42,6 +42,10 @@ public class PlayerHealthUIController : MonoBehaviour
 
 	void Update()
 	{
+		if (healthManager.GetCurrentHealth() == healthManager.GetMaxHealth())
+		{
+			healthUI.gameObject.SetActive(false);
+		}
 		if (updateSpeed > 0)
 		{
 			slider.value = Mathf.Lerp(slider.value, 1 - (healthManager.GetCurrentHealth() / maxHealth), Time.deltaTime * updateSpeed);
@@ -50,5 +54,10 @@ public class PlayerHealthUIController : MonoBehaviour
 		{
 			slider.value = targetSliderValue;
 		}
+	}
+
+	void OnDisable()
+	{
+		healthManager.OnHealthChange -= UpdateHealth;
 	}
 }

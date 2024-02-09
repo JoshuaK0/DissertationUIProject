@@ -19,6 +19,7 @@ namespace InfimaGames.Animated.ModernGuns
 		[Tooltip("Inventory.")]
 		[SerializeField]
 		private InventoryBehaviour inventory;
+		[SerializeField] bool isCamera;
 
 		[Title(label: "Animation")]
 
@@ -108,10 +109,14 @@ namespace InfimaGames.Animated.ModernGuns
 		/// </summary>
 		protected override void Awake()
 		{
-			//Initialize Inventory.
-			//inventory.Init();
-			//Refresh!
-			RefreshWeaponSetup();
+			if(!isCamera)
+			{
+				//Initialize Inventory.
+				inventory.Init();
+				//Refresh!
+				RefreshWeaponSetup();
+			}
+			
 
 			//Get DataLinker.
 			var dataLinker = GetComponent<DataLinker>();
@@ -284,16 +289,16 @@ namespace InfimaGames.Animated.ModernGuns
 			#region Grenade Throw
 
 			//Pressing Grenade Button.
-			if (Input.GetKeyDown(inputs.Get(CInputs.Grenade)) && !holstered)
-				PlayGrenadeThrow();
+			/*if (Input.GetKeyDown(inputs.Get(CInputs.Grenade)) && !holstered)
+				PlayGrenadeThrow();*/
 
 			#endregion
 
 			#region Knife
 
 			//Pressing Knife Button.
-			if (Input.GetKeyDown(inputs.Get(CInputs.Knife)))
-				PlayMelee();
+			/*if (Input.GetKeyDown(inputs.Get(CInputs.Knife)))
+				PlayMelee();*/
 
 			#endregion
 
@@ -327,6 +332,23 @@ namespace InfimaGames.Animated.ModernGuns
 
 			//Update Movement.
 			axisMovement = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+
+			#endregion
+
+			#region Inventory Switching
+
+			//ScrollWheel Value.
+			// float scrollWheel = Input.GetAxisRaw("Mouse ScrollWheel");
+			// if(scrollWheel != 0)
+			// 	ScrollInventory(scrollWheel);
+
+			//Scroll Forward.
+			if (Input.GetKeyDown(inputs.Get(CInputs.SwitchPositive)))
+				ScrollInventory(1);
+
+			//Scroll Backward.
+			if (Input.GetKeyDown(inputs.Get(CInputs.SwitchNegative)))
+				ScrollInventory(-1);
 
 			#endregion
 
@@ -493,7 +515,7 @@ namespace InfimaGames.Animated.ModernGuns
 		private void RefreshWeaponSetup()
 		{
 			//Make sure we have a weapon. We don't want errors!
-			if (equippedWeapon == null)
+			if ((equippedWeapon = inventory.GetEquipped()) == null)
 				return;
 
 			//Update Animator Controller. We do this to update all animations to a specific weapon's set.

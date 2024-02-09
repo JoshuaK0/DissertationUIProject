@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 23692670629066241}
   - component: {fileID: 2203284079010200577}
   - component: {fileID: 7294413280362874019}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Cylinder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -26,12 +26,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2057275208616107646}
+  serializedVersion: 2
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: -0.0301, y: -0.0368, z: 0}
   m_LocalScale: {x: 0.09493535, y: 0.052561216, z: 0.09493535}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1806658055500668773}
-  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!33 &23692670629066241
 MeshFilter:
@@ -52,6 +53,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -90,8 +92,17 @@ CapsuleCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2057275208616107646}
   m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
   m_IsTrigger: 0
+  m_ProvidesContacts: 0
   m_Enabled: 1
+  serializedVersion: 2
   m_Radius: 0.50000006
   m_Height: 1.9999999
   m_Direction: 1
@@ -107,7 +118,7 @@ GameObject:
   - component: {fileID: 8510446604008090402}
   - component: {fileID: 4298995333338373267}
   - component: {fileID: 351773082932584686}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: node_id10 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -121,12 +132,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2344992550015961767}
+  serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0.9988739, z: 0.047445524, w: 0}
   m_LocalPosition: {x: 0.015759, y: -0.029638, z: 0.74704}
   m_LocalScale: {x: 0.04803314, y: 0.048033148, z: 0.048033137}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1806658055500668773}
-  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &4298995333338373267
 MeshFilter:
@@ -147,6 +159,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -187,7 +200,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1806658055500668773}
   - component: {fileID: 3234592907403327666}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: MiniSingleDrumMag
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -201,15 +214,16 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2712434970410486840}
+  serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0.000092398, y: 0.027114, z: -0.10301}
   m_LocalScale: {x: 1.19, y: 1.19, z: 1.19}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1318547191455772410}
   - {fileID: 8510446604008090402}
   - {fileID: 2607399773315280921}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &3234592907403327666
 MonoBehaviour:
@@ -223,7 +237,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 515013639c0372449b020b11192859f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  partType: Magazine
+  partType: 0
   attatchmentPoints:
   - {fileID: 3820763290883645289}
   labelButton: {fileID: 0}
@@ -237,7 +251,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1318547191455772410}
   - component: {fileID: 3820763290883645289}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Reciever Attatchment Point
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -251,12 +265,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6551908238744289821}
+  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0.0519, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1806658055500668773}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &3820763290883645289
 MonoBehaviour:
@@ -270,6 +285,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7297a35383d669343a7616507b0afa7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attatchesToType: Reciever
+  attatchesToType: 5
   ownerPart: {fileID: 3234592907403327666}
-  attatchedTo: {fileID: 8106520960729392623, guid: 8d902aa373460064f85a272c252e1936, type: 3}
+  attatchedTo: {fileID: 8106520960729392623, guid: 8d902aa373460064f85a272c252e1936,
+    type: 3}

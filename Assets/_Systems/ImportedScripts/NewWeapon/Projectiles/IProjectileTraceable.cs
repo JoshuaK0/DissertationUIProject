@@ -1,4 +1,5 @@
+using UnityEngine;
 public interface IProjectileTraceable
 {
-	public void InitProjectileTracer();
+	public void InitProjectileTracer(Vector3 direction);
 }

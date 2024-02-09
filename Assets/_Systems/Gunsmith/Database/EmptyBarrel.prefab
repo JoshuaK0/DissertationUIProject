@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4658496778236629255}
   - component: {fileID: 7488420153658384532}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: RecieverAttachmentPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24,12 +24,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 578475437493648864}
+  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: -0.05, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5474314883923239064}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &7488420153658384532
 MonoBehaviour:
@@ -43,7 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7297a35383d669343a7616507b0afa7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attatchesToType: Reciever
+  attatchesToType: 5
   ownerPart: {fileID: 9081984258348812111}
   attatchedTo: {fileID: 0}
 --- !u!1 &8234834692850040369
@@ -56,7 +57,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1961123122975749416}
   - component: {fileID: 3686270783783236061}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: MuzzleAttachmentPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -70,12 +71,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8234834692850040369}
+  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: -0.05, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5474314883923239064}
-  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &3686270783783236061
 MonoBehaviour:
@@ -89,7 +91,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7297a35383d669343a7616507b0afa7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attatchesToType: Muzzle
+  attatchesToType: 4
   ownerPart: {fileID: 9081984258348812111}
   attatchedTo: {fileID: 0}
 --- !u!1 &8596989814920573893
@@ -102,7 +104,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5474314883923239064}
   - component: {fileID: 9081984258348812111}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: EmptyBarrel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -116,14 +118,15 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8596989814920573893}
+  serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0.03, z: 0.1}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4658496778236629255}
   - {fileID: 1961123122975749416}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &9081984258348812111
 MonoBehaviour:
@@ -137,7 +140,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 515013639c0372449b020b11192859f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  partType: Barrel
+  partType: 0
   attatchmentPoints:
   - {fileID: 7488420153658384532}
   - {fileID: 3686270783783236061}

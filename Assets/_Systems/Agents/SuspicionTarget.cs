@@ -22,9 +22,27 @@ public class SuspicionTarget : MonoBehaviour
 	[SerializeField] float multiplier = 1;
 	[SerializeField] int priority;
 
+	[SerializeField] bool rediscoverable;
+
+	bool isInvestigated;
+
 	float currentFuzzyRadius = 0;
 
 	Vector3 currentLocation;
+
+	public void SetInvestigated(bool truity)
+	{
+		isInvestigated = truity;
+	}
+
+	public bool IsInvestigated()
+	{
+		if(rediscoverable)
+		{
+			return false;
+		}
+		return isInvestigated;
+	}
 
 	public int GetPriority()
 	{

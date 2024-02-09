@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4658496778236629255}
   - component: {fileID: 7488420153658384532}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Reciever Attatchment Point
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24,12 +24,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 578475437493648864}
+  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0.1753, z: -0.0569}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5474314883923239064}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &7488420153658384532
 MonoBehaviour:
@@ -43,7 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7297a35383d669343a7616507b0afa7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attatchesToType: Reciever
+  attatchesToType: 5
   ownerPart: {fileID: 9081984258348812111}
   attatchedTo: {fileID: 0}
 --- !u!1 &8596989814920573893
@@ -56,7 +57,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5474314883923239064}
   - component: {fileID: 9081984258348812111}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Magazine 12
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -70,14 +71,15 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8596989814920573893}
+  serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4658496778236629255}
   - {fileID: 7195928784743249215}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &9081984258348812111
 MonoBehaviour:
@@ -91,7 +93,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 515013639c0372449b020b11192859f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  partType: Magazine
+  partType: 1
   attatchmentPoints:
   - {fileID: 7488420153658384532}
   labelButton: {fileID: 0}
@@ -100,11 +102,16 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 3
     m_TransformParent: {fileID: 5474314883923239064}
     m_Modifications:
     - target: {fileID: 1057711968050936, guid: cda7daa41118a864590c628f09b35eb5, type: 3}
       propertyPath: m_Name
       value: SM_Wep_Mod_B_Mag_07
+      objectReference: {fileID: 0}
+    - target: {fileID: 1057711968050936, guid: cda7daa41118a864590c628f09b35eb5, type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 4469376190304854, guid: cda7daa41118a864590c628f09b35eb5, type: 3}
       propertyPath: m_RootOrder
@@ -151,9 +158,13 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cda7daa41118a864590c628f09b35eb5, type: 3}
 --- !u!4 &7195928784743249215 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: 4469376190304854, guid: cda7daa41118a864590c628f09b35eb5, type: 3}
+  m_CorrespondingSourceObject: {fileID: 4469376190304854, guid: cda7daa41118a864590c628f09b35eb5,
+    type: 3}
   m_PrefabInstance: {fileID: 7193079582827865961}
   m_PrefabAsset: {fileID: 0}

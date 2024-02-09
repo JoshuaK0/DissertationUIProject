@@ -9,6 +9,7 @@ public class CombatantFSM : FiniteStateMachine, IKillable
 	
 	[Header("References")]
 	[SerializeField] CombatantServiceLocator combatantServices;
+	[SerializeField] SuspicionTarget suspicionTarget;
 
 	[Header("Target Finding")]
 	[SerializeField] SquadTarget currentTarget;
@@ -37,6 +38,16 @@ public class CombatantFSM : FiniteStateMachine, IKillable
 	void Awake()
 	{
 		currentTarget = null;
+	}
+
+	public void SetSuspicionTarget(SuspicionTarget newTarget)
+	{
+		suspicionTarget = newTarget;
+	}
+
+	public SuspicionTarget GetSuspicionTarget()
+	{
+		return suspicionTarget;
 	}
 
 	public override void Start()

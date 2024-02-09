@@ -5,7 +5,8 @@ public class MouseLook : MonoBehaviour
 	public Rigidbody playerRigidbody;
 	public Transform cameraPivot;
 	public Transform cameraTransform;
-	public float mouseSensitivity;
+	[SerializeField] float baseSensitivity;
+	[SerializeField] float modifiedSensitivity;
 
 	public Transform rotationPivot; // The predetermined pivot point for rotation
 
@@ -18,8 +19,12 @@ public class MouseLook : MonoBehaviour
 
 	void Update()
 	{
+		if (Time.timeScale == 0)
+		{
+			return;
+		}
 		// Mouse movement
-		mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity;
+		mouseY = Input.GetAxis("Mouse Y") * modifiedSensitivity;
 
 		// Rotate the camera for up/down look
 		verticalRotation -= mouseY;
@@ -27,7 +32,7 @@ public class MouseLook : MonoBehaviour
 		cameraTransform.localEulerAngles = new Vector3(verticalRotation, 0f, 0f);
 
 		// Prepare horizontal rotation for FixedUpdate
-		mouseX = Input.GetAxis("Mouse X") * mouseSensitivity;
+		mouseX = Input.GetAxis("Mouse X") * modifiedSensitivity;
 		if (!isRigidbody)
 		{
 			cameraPivot.eulerAngles = cameraPivot.eulerAngles + new Vector3(0f, mouseX, 0f);
@@ -50,5 +55,20 @@ public class MouseLook : MonoBehaviour
 		direction = rotation * direction; // Rotate the direction
 		rb.MovePosition(point + direction); // Move to the new position
 		rb.MoveRotation(rb.rotation * rotation); // Rotate the rigidbody
+	}
+
+	public void SetSensitivity(float newSensitivity)
+	{
+		baseSensitivity = newSensitivity;
+	}
+
+	public void SetModifiedSensitivity(float newSensitivity)
+	{
+		modifiedSensitivity = newSensitivity;
+	}
+
+	public float GetBaseSensitivity()
+	{
+		return baseSensitivity;
 	}
 }

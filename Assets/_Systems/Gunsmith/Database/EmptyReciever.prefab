@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4658496778236629255}
   - component: {fileID: 7488420153658384532}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: BarrelAttatchPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24,12 +24,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 578475437493648864}
+  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0.1}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5474314883923239064}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &7488420153658384532
 MonoBehaviour:
@@ -43,7 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7297a35383d669343a7616507b0afa7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attatchesToType: Barrel
+  attatchesToType: 0
   ownerPart: {fileID: 9081984258348812111}
   attatchedTo: {fileID: 0}
 --- !u!1 &1872783223587110099
@@ -56,7 +57,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7672356861372107019}
   - component: {fileID: 1306577488178306366}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: MagazineAttachPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -70,12 +71,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1872783223587110099}
+  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: -0.07, z: 0.026}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5474314883923239064}
-  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1306577488178306366
 MonoBehaviour:
@@ -89,7 +91,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7297a35383d669343a7616507b0afa7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attatchesToType: Magazine
+  attatchesToType: 1
   ownerPart: {fileID: 9081984258348812111}
   attatchedTo: {fileID: 0}
 --- !u!1 &4723513084197135040
@@ -102,7 +104,7 @@ GameObject:
   m_Component:
   - component: {fileID: 290729455946973470}
   - component: {fileID: 8106520960729392623}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: StockAttachPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -116,12 +118,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4723513084197135040}
+  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -0.103}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5474314883923239064}
-  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &8106520960729392623
 MonoBehaviour:
@@ -135,7 +138,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7297a35383d669343a7616507b0afa7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attatchesToType: Stock
+  attatchesToType: 2
   ownerPart: {fileID: 9081984258348812111}
   attatchedTo: {fileID: 0}
 --- !u!1 &7071242432346087602
@@ -148,7 +151,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1638210644268728174}
   - component: {fileID: 5510839266455858128}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: SightAttachmentPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -162,12 +165,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7071242432346087602}
+  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0.076, z: -0.053}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5474314883923239064}
-  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &5510839266455858128
 MonoBehaviour:
@@ -181,7 +185,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7297a35383d669343a7616507b0afa7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attatchesToType: Sight
+  attatchesToType: 3
   ownerPart: {fileID: 9081984258348812111}
   attatchedTo: {fileID: 0}
 --- !u!1 &8596989814920573893
@@ -194,7 +198,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5474314883923239064}
   - component: {fileID: 9081984258348812111}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: EmptyReciever
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -208,16 +212,17 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8596989814920573893}
+  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0.03, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4658496778236629255}
   - {fileID: 290729455946973470}
   - {fileID: 7672356861372107019}
   - {fileID: 1638210644268728174}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &9081984258348812111
 MonoBehaviour:
@@ -231,7 +236,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 515013639c0372449b020b11192859f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  partType: Reciever
+  partType: 5
   attatchmentPoints:
   - {fileID: 7488420153658384532}
   - {fileID: 8106520960729392623}

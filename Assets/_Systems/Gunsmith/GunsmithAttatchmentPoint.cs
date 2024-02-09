@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 public class GunsmithAttatchmentPoint : MonoBehaviour
 {
-    [SerializeField] string attatchesToType;
+    [SerializeField] PartType attatchesToType;
     [SerializeField] GunsmithPart ownerPart;
 
     [SerializeField] GunsmithAttatchmentPoint attatchedTo;
 
-    public string GetAttatchesToType()
+    public PartType GetAttatchesToType()
     {
         return attatchesToType;
     }
@@ -39,7 +39,7 @@ public class GunsmithAttatchmentPoint : MonoBehaviour
 
         if (attatchedTo == null)
         {
-            if(ownerPart.GetPartType() == "Reciever" || ownerPart.GetPartType() == "Barrel" || ownerPart.GetPartType() == "Stock" || ownerPart.GetPartType() == "Magazine")
+            if(ownerPart.GetPartType() == PartType.Receiver || ownerPart.GetPartType() == PartType.Barrel || ownerPart.GetPartType() == PartType.Stock || ownerPart.GetPartType() == PartType.Magazine)
             {
                 GameObject partToCreate = null;
                 foreach (GunsmithPartTypeCollection partTypeCollection in GunsmithManager.Instance().GetPartDatabase().GetPartTypeCollections())

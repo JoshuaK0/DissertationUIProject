@@ -90,12 +90,16 @@ public abstract class FiniteStateMachine : MonoBehaviour
     {
         if(currentState!=null)
         {
-            Handles.Label(transform.position + Vector3.up * 2, currentState.ToString().Remove(currentState.ToString().Length - 8));
+            //Handles.Label(transform.position + Vector3.up * 2, currentState.ToString().Remove(currentState.ToString().Length - 8));
         }
     }
 
     public string GetCurrentState()
     {
+        if(currentState==null)
+        {
+            return "";
+        }
         return currentState.transform.name;
     }
 

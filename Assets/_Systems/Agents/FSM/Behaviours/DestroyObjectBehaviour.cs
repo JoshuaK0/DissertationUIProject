@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class DestroyObjectBehaviour : FSMBehaviour
 {
-	[SerializeField] GameObject gameObjectToDestroy;
+	[SerializeField] Object objectToDestroy;
 	[SerializeField] float delay;
 
 	public override void EnterBehaviour()
 	{
-		Destroy(gameObjectToDestroy, delay);
+		Destroy(objectToDestroy, delay);
 	}
 }

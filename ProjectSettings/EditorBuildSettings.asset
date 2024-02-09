@@ -6,27 +6,30 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Gunsmith.unity
-    guid: ed2c8b29a9afc9d449c0fe61788a7a89
+    path: Assets/Scenes/Test Environments/StartTest.unity
+    guid: e8b865498a7c41040a96f7d7e5d1f559
   - enabled: 1
     path: Assets/Scenes/Test Environments/Test1.unity
     guid: f8948f0fb674d5f45a0f12ca66c68b43
+  - enabled: 0
+    path: Assets/Scenes/Gunsmith.unity
+    guid: ed2c8b29a9afc9d449c0fe61788a7a89
   - enabled: 1
     path: Assets/Scenes/LevelLogic.unity
     guid: 2f8c07a0ccac11c449f167cad075f7f7
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/MainMenu.unity
     guid: 6195da9e63168a441aaa7f18c07e93ef
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/LoadEditorLevel.unity
     guid: ed1418b9998d02044abf289f3973ac9a
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/EditorMapSelect.unity
     guid: cedfaf7a2d72c0b4ea3826477981776e
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/LoadPlayableLevel.unity
     guid: 158d275adaf25494693e2c7468196449
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/PlayableMapSelect.unity
     guid: 5ce8ebc01eefb594d8839c344b53b8e3
   m_configObjects: {}

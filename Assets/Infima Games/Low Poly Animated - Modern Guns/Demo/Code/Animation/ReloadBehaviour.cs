@@ -222,7 +222,8 @@ namespace InfimaGames.Animated.ModernGuns
         {
             //This little variable determines whether we keep the magazine visible after this state finishes (now).
             bool keepVisible = defaultVisibility;
-            
+
+            Debug.Log(magazineObject);
             //We do this so we can change this based on the magazine, which we only do for specific weapons.
             var magazineManager = magazineObject.GetComponent<IMagazine>();
             if (magazineManager != null)

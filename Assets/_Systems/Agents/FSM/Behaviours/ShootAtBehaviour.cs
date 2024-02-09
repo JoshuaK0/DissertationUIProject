@@ -32,6 +32,8 @@ public class ShootAtBehaviour : FSMBehaviour
 
 	public override void EnterBehaviour()
 	{
+		damage = DifficultyDatabase.Instance.GetDifficulty();
+		fireTime = 0;
 		isInBehaviour = true;
 		combatantFSM = fsm.GetComponent<CombatantFSM>();
 		StartBurst();

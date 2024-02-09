@@ -6,7 +6,6 @@ using UnityEngine.UI;
 public class DestroyOnCollide : MonoBehaviour
 {
 	[SerializeField] LayerMask lm;
-	bool firstFrame = true;
 
 	Vector3 lastPos;
 	[SerializeField] float distance;
@@ -14,7 +13,7 @@ public class DestroyOnCollide : MonoBehaviour
 
 	[SerializeField] Rigidbody rb;
 
-	void Update()
+	void FixedUpdate()
 	{
 		float distanceFromStart = Vector3.Distance(startPos, transform.position);
 		if (distanceFromStart > distance)
@@ -34,13 +33,16 @@ public class DestroyOnCollide : MonoBehaviour
 
 	void Start()
 	{
-		firstFrame = false;
 		startPos = transform.position;
 	}
 
 	public void Stop()
 	{
-		rb.isKinematic = true;
-		rb.velocity = Vector3.zero;
+		if(rb != null)
+		{
+			rb.velocity = Vector3.zero;
+			//rb.isKinematic = true;
+		}
+		
 	}
 }

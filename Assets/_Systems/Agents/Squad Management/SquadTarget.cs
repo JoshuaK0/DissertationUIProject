@@ -96,4 +96,14 @@ public class SquadTarget: MonoBehaviour
 		transform.position = position;
 		lastSpottedPosition = position;
 	}
+
+	public Vector3 GetLKP()
+	{
+		return lastSpottedPosition;
+	}
+
+	public CombatantID GetCombatantID()
+	{
+		return combatantID;
+	}
 }

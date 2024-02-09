@@ -14,7 +14,7 @@ public class GunsmithUIManager : MonoBehaviour
 
     public static GunsmithUIManager instance;
 
-    string selectedPartType;
+	PartType selectedPartType;
 
     List<GunsmithInventoryTab> typeInventories = new List<GunsmithInventoryTab>();
 
@@ -34,7 +34,7 @@ public class GunsmithUIManager : MonoBehaviour
 
         foreach (GunsmithPartTypeCollection collection in database.GetPartTypeCollections())
         {
-            string type = collection.GetPartType();
+			PartType type = collection.GetPartType();
             GameObject tabButton = Instantiate(inventoryTabButton, Vector3.zero, Quaternion.identity, inventoryCanvas);
             tabButton.GetComponent<GunsmithInventoryTab>().SetTabType(type);
             typeInventories.Add(tabButton.GetComponent<GunsmithInventoryTab>());
@@ -50,7 +50,7 @@ public class GunsmithUIManager : MonoBehaviour
 
     }
 
-    public void SelectPartType(string partType)
+    public void SelectPartType(PartType partType)
     {
         selectedPartType = partType;
 

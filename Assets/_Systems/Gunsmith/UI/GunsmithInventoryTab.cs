@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class GunsmithInventoryTab : MonoBehaviour
 {
-    [SerializeField] string partType;
+    [SerializeField] PartType partType;
 
-    public string GetPartType()
+    public PartType GetPartType()
     {
         return partType;
     }
 
-    public void SetTabType(string newType)
+    public void SetTabType(PartType newType)
     {
         partType = newType;
     }

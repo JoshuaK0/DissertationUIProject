@@ -5,10 +5,10 @@ using UnityEngine;
 [System.Serializable]
 public class GunsmithPartTypeCollection
 {
-    [SerializeField] string partType;
+    [SerializeField] PartType partType;
     [SerializeField] List<GameObject> parts;
 
-    public string GetPartType()
+    public PartType GetPartType()
     {
         return partType;
     }

@@ -17,6 +17,6 @@ public class HasLOSToTarget : FSMDecision
 
 	public override bool DecisionEvaluate()
 	{
-		return visualSensor.IsCombatantVisible(combatantFSM.GetTarget().lastSpottedPosition, combatantFSM.GetTarget().combatantID);
+		return visualSensor.IsCombatantVisible(combatantFSM.GetTarget().combatantID);
 	}
 }
